@@ -1,0 +1,958 @@
+2026-10-20 19:10:57,419 - app.main - INFO - Environment: development
+2026-10-20 19:10:57,419 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-20 19:10:57,419 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-20 19:10:57,419 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-20 19:10:57,429 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:10:57,429 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:10:57,429 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:10:57,430 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-20 19:10:57,430 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-20 19:10:57,430 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,430 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,430 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,430 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,433 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("claims")
+2026-10-20 19:10:57,433 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("claims")
+2026-10-20 19:10:57,433 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("claims")
+2026-10-20 19:10:57,433 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("claims")
+2026-10-20 19:10:57,433 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,434 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,434 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-20 19:10:57,434 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-20 19:10:57,435 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-20 19:10:57,435 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-20 19:10:57,435 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,435 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,435 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,436 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("documents")
+2026-10-20 19:10:57,436 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("documents")
+2026-10-20 19:10:57,436 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("documents")
+2026-10-20 19:10:57,440 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,440 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,440 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,442 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-20 19:10:57,442 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-20 19:10:57,442 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-20 19:10:57,443 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,443 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,443 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,445 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("activities")
+2026-10-20 19:10:57,445 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("documents")
+2026-10-20 19:10:57,445 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,445 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,447 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-20 19:10:57,447 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,447 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+ble_info("activities")
+2026-10-20 19:10:57,448 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE claims (
+	id INTEGER NOT NULL, 
+	application_number VARCHAR(10) NOT NULL, 
+	farmer_name VARCHAR(100) NOT NULL, 
+	mobile_number VARCHAR(10), 
+	crop VARCHAR(50) NOT NULL, 
+	season VARCHAR(20) NOT NULL, 
+	year INTEGER NOT NULL, 
+	state VARCHAR(50), 
+	district VARCHAR(50), 
+	village VARCHAR(50), 
+	land_area DECIMAL(10, 2), 
+	sum_insured DECIMAL(10, 2), 
+	premium_paid DECIMAL(10, 2), 
+	claim_amount DECIMAL(10, 2), 
+	payment_reference VARCHAR(100), 
+	claim_status VARCHAR(50) NOT NULL, 
+	payment_status VARCHAR(50), 
+	current_stage INTEGER, 
+	completion_percentage INTEGER, 
+	error_message TEXT, 
+	action_needed TEXT, 
+	rejection_reason TEXT, 
+	appeal_possible INTEGER, 
+	officer_name VARCHAR(100), 
+	officer_contact VARCHAR(10), 
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
+	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
+	approval_date DATETIME, 
+	payment_date DATETIME, 
+	verification_date DATETIME, 
+	PRIMARY KEY (id)
+)
+
+
+2026-10-20 19:10:57,448 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,448 - sqlalchemy.engine.Engine - INFO - [no key 0.00066s] ()
+2026-10-20 19:10:57,449 - sqlalchemy.engine.Engine - INFO - PRAGMA temp.table_info("activities")
+2026-10-20 19:10:57,449 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:10:57,450 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE claims (
+	id INTEGER NOT NULL, 
+	application_number VARCHAR(10) NOT NULL, 
+	farmer_name VARCHAR(100) NOT NULL, 
+	mobile_number VARCHAR(10), 
+	crop VARCHAR(50) NOT NULL, 
+	season VARCHAR(20) NOT NULL, 
+	year INTEGER NOT NULL, 
+	state VARCHAR(50), 
+	district VARCHAR(50), 
+	village VARCHAR(50), 
+	land_area DECIMAL(10, 2), 
+	sum_insured DECIMAL(10, 2), 
+	premium_paid DECIMAL(10, 2), 
+	claim_amount DECIMAL(10, 2), 
+	payment_reference VARCHAR(100), 
+	claim_status VARCHAR(50) NOT NULL, 
+	payment_status VARCHAR(50), 
+	current_stage INTEGER, 
+	completion_percentage INTEGER, 
+	error_message TEXT, 
+	action_needed TEXT, 
+	rejection_reason TEXT, 
+	appeal_possible INTEGER, 
+	officer_name VARCHAR(100), 
+	officer_contact VARCHAR(10), 
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
+	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
+	approval_date DATETIME, 
+	payment_date DATETIME, 
+	verification_date DATETIME, 
+	PRIMARY KEY (id)
+)
+
+
+2026-10-20 19:10:57,451 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE claims (
+	id INTEGER NOT NULL, 
+	application_number VARCHAR(10) NOT NULL, 
+	farmer_name VARCHAR(100) NOT NULL, 
+	mobile_number VARCHAR(10), 
+	crop VARCHAR(50) NOT NULL, 
+	season VARCHAR(20) NOT NULL, 
+	year INTEGER NOT NULL, 
+	state VARCHAR(50), 
+	district VARCHAR(50), 
+	village VARCHAR(50), 
+	land_area DECIMAL(10, 2), 
+	sum_insured DECIMAL(10, 2), 
+	premium_paid DECIMAL(10, 2), 
+	claim_amount DECIMAL(10, 2), 
+	payment_reference VARCHAR(100), 
+	claim_status VARCHAR(50) NOT NULL, 
+	payment_status VARCHAR(50), 
+	current_stage INTEGER, 
+	completion_percentage INTEGER, 
+	error_message TEXT, 
+	action_needed TEXT, 
+	rejection_reason TEXT, 
+	appeal_possible INTEGER, 
+	officer_name VARCHAR(100), 
+	officer_contact VARCHAR(10), 
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
+	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
+	approval_date DATETIME, 
+	payment_date DATETIME, 
+	verification_date DATETIME, 
+	PRIMARY KEY (id)
+)
+
+
+2026-10-20 19:10:57,451 - sqlalchemy.engine.Engine - INFO - [no key 0.00071s] ()
+2026-10-20 19:10:57,452 - sqlalchemy.engine.Engine - INFO - [no key 0.00103s] ()
+2026-10-20 19:10:57,453 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE claims (
+	id INTEGER NOT NULL, 
+	application_number VARCHAR(10) NOT NULL, 
+	farmer_name VARCHAR(100) NOT NULL, 
+	mobile_number VARCHAR(10), 
+	crop VARCHAR(50) NOT NULL, 
+	season VARCHAR(20) NOT NULL, 
+	year INTEGER NOT NULL, 
+	state VARCHAR(50), 
+	district VARCHAR(50), 
+	village VARCHAR(50), 
+	land_area DECIMAL(10, 2), 
+	sum_insured DECIMAL(10, 2), 
+	premium_paid DECIMAL(10, 2), 
+	claim_amount DECIMAL(10, 2), 
+	payment_reference VARCHAR(100), 
+	claim_status VARCHAR(50) NOT NULL, 
+	payment_status VARCHAR(50), 
+	current_stage INTEGER, 
+	completion_percentage INTEGER, 
+	error_message TEXT, 
+	action_needed TEXT, 
+	rejection_reason TEXT, 
+	appeal_possible INTEGER, 
+	officer_name VARCHAR(100), 
+	officer_contact VARCHAR(10), 
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
+	updated_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
+	approval_date DATETIME, 
+	payment_date DATETIME, 
+	verification_date DATETIME, 
+	PRIMARY KEY (id)
+)
+
+
+2026-10-20 19:10:57,454 - sqlalchemy.engine.Engine - INFO - [no key 0.00073s] ()
+2026-10-20 19:10:57,459 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_claims_id ON claims (id)
+2026-10-20 19:10:57,461 - sqlalchemy.engine.Engine - INFO - [no key 0.00227s] ()
+2026-10-20 19:10:57,468 - sqlalchemy.engine.Engine - INFO - CREATE UNIQUE INDEX ix_claims_application_number ON claims (application_number)
+2026-10-20 19:10:57,468 - sqlalchemy.engine.Engine - INFO - [no key 0.00039s] ()
+2026-10-20 19:10:57,475 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE documents (
+	id INTEGER NOT NULL, 
+	claim_id INTEGER NOT NULL, 
+	document_type VARCHAR(50) NOT NULL, 
+	file_name VARCHAR(255), 
+	file_path VARCHAR(500), 
+	file_size INTEGER, 
+	mime_type VARCHAR(100), 
+	status VARCHAR(20), 
+	verified_by VARCHAR(100), 
+	verification_notes TEXT, 
+	rejection_reason TEXT, 
+	uploaded_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
+	verified_at DATETIME, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(claim_id) REFERENCES claims (id) ON DELETE CASCADE
+)
+
+
+2026-10-20 19:10:57,478 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-20 19:10:57,478 - sqlalchemy.engine.Engine - INFO - [no key 0.00368s] ()
+2026-10-20 19:10:57,485 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_documents_id ON documents (id)
+2026-10-20 19:10:57,485 - sqlalchemy.engine.Engine - INFO - [no key 0.00036s] ()
+2026-10-20 19:10:57,490 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_documents_claim_id ON documents (claim_id)
+2026-10-20 19:10:57,491 - sqlalchemy.engine.Engine - INFO - [no key 0.00043s] ()
+2026-10-20 19:10:57,491 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-20 19:10:57,496 - sqlalchemy.engine.Engine - INFO - 
+CREATE TABLE activities (
+	id INTEGER NOT NULL, 
+	claim_id INTEGER NOT NULL, 
+	stage_number INTEGER NOT NULL, 
+	stage_name VARCHAR(100) NOT NULL, 
+	status VARCHAR(20) NOT NULL, 
+	notes TEXT, 
+	performed_by VARCHAR(100), 
+	created_at DATETIME DEFAULT CURRENT_TIMESTAMP, 
+	started_at DATETIME, 
+	completed_at DATETIME, 
+	PRIMARY KEY (id), 
+	FOREIGN KEY(claim_id) REFERENCES claims (id) ON DELETE CASCADE
+)
+
+
+2026-10-20 19:10:57,496 - sqlalchemy.engine.Engine - INFO - [no key 0.00042s] ()
+2026-10-20 19:10:57,501 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_activities_id ON activities (id)
+2026-10-20 19:10:57,501 - sqlalchemy.engine.Engine - INFO - [no key 0.00042s] ()
+2026-10-20 19:10:57,505 - sqlalchemy.engine.Engine - INFO - CREATE INDEX ix_activities_claim_id ON activities (claim_id)
+2026-10-20 19:10:57,506 - sqlalchemy.engine.Engine - INFO - [no key 0.00080s] ()
+2026-10-20 19:10:57,515 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-20 19:14:12,846 - app.main - INFO - Environment: development
+2026-10-20 19:14:12,846 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-20 19:14:12,848 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:14:12,848 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-20 19:14:12,849 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:14:12,851 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-20 19:14:12,851 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:14:12,852 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-20 19:14:12,853 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:14:12,856 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-20 19:14:42,940 - app.main - INFO - Environment: development
+2026-10-20 19:14:42,940 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-20 19:14:42,942 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:14:42,942 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-20 19:14:42,942 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:14:42,943 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-20 19:14:42,944 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:14:42,944 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-20 19:14:42,944 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:14:42,947 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-20 19:18:41,550 - app.routes.claims - INFO - Fetching claim: 12345
+2026-10-20 19:18:41,563 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:18:41,572 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-20 19:18:41,573 - sqlalchemy.engine.Engine - INFO - [generated in 0.00070s] ('12345',)
+2026-10-20 19:18:41,575 - app.routes.claims - WARNING - Claim not found: 12345
+2026-10-20 19:18:41,576 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-20 19:18:41,577 - app.database - ERROR - Database error: 404: Claim not found
+2026-10-20 19:18:59,225 - app.main - INFO - Environment: development
+2026-10-20 19:18:59,225 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-20 19:18:59,229 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:18:59,229 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-20 19:18:59,230 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,234 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-20 19:18:59,234 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,236 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-20 19:18:59,236 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,242 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-20 19:18:59,247 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:18:59,257 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-20 19:18:59,258 - sqlalchemy.engine.Engine - INFO - [generated in 0.00060s] ()
+2026-10-20 19:18:59,271 - sqlalchemy.engine.Engine - INFO - INSERT INTO claims (application_number, farmer_name, mobile_number, crop, season, year, state, district, village, land_area, sum_insured, premium_paid, claim_amount, payment_reference, claim_status, payment_status, current_stage, completion_percentag ... 175 characters truncated ...  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, updated_at
+2026-10-20 19:18:59,272 - sqlalchemy.engine.Engine - INFO - [generated in 0.00031s (insertmanyvalues) 1/4 (ordered; batch not supported)] ('12345', 'Ramesh Kumar', '9876543210', 'Rice', 'Kharif', 2026, 'Maharashtra', 'Nashik', 'Pimpalgaon', 2.5, 50000.0, 2000.0, 25000.0, 'PAY2026001', 'Approved', 'Processed', 6, 100, None, None, None, 0, None, None, '2026-10-05 19:18:59.265704', '2026-10-18 19:18:59.265718', '2026-10-19 19:18:59.265719', None)
+2026-10-20 19:18:59,277 - sqlalchemy.engine.Engine - INFO - INSERT INTO claims (application_number, farmer_name, mobile_number, crop, season, year, state, district, village, land_area, sum_insured, premium_paid, claim_amount, payment_reference, claim_status, payment_status, current_stage, completion_percentag ... 175 characters truncated ...  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, updated_at
+2026-10-20 19:18:59,278 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 2/4 (ordered; batch not supported)] ('67890', 'Sunita Devi', '9876543211', 'Wheat', 'Rabi', 2026, 'Punjab', 'Ludhiana', 'Jagraon', 3.0, 60000.0, 2400.0, None, None, 'Under Review', 'Not Applicable', 3, 50, None, 'Upload missing documents: Land Record and Sowing Certificate', None, 0, None, None, '2026-10-15 19:18:59.266466', None, None, None)
+2026-10-20 19:18:59,279 - sqlalchemy.engine.Engine - INFO - INSERT INTO claims (application_number, farmer_name, mobile_number, crop, season, year, state, district, village, land_area, sum_insured, premium_paid, claim_amount, payment_reference, claim_status, payment_status, current_stage, completion_percentag ... 175 characters truncated ...  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, updated_at
+2026-10-20 19:18:59,280 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 3/4 (ordered; batch not supported)] ('11223', 'Prakash Patil', '9876543212', 'Cotton', 'Rabi', 2026, 'Gujarat', 'Ahmedabad', 'Dholka', 4.0, 80000.0, 3200.0, None, None, 'Action Required', 'Not Applicable', 2, 20, 'Season mismatch: Cotton is a Kharif crop, but Rabi season was selected', 'Please update season to Kharif or change crop selection', None, 0, None, None, '2026-10-17 19:18:59.266738', None, None, None)
+2026-10-20 19:18:59,282 - sqlalchemy.engine.Engine - INFO - INSERT INTO claims (application_number, farmer_name, mobile_number, crop, season, year, state, district, village, land_area, sum_insured, premium_paid, claim_amount, payment_reference, claim_status, payment_status, current_stage, completion_percentag ... 175 characters truncated ...  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, updated_at
+2026-10-20 19:18:59,282 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 4/4 (ordered; batch not supported)] ('44556', 'Lakshmi Reddy', '9876543213', 'Sugarcane', 'Kharif', 2026, 'Karnataka', 'Belgaum', 'Sankeshwar', 5.0, 100000.0, 4000.0, 50000.0, None, 'Approved', 'Processing', 5, 90, None, None, None, 0, None, None, '2026-10-10 19:18:59.267017', '2026-10-18 19:18:59.267019', None, None)
+2026-10-20 19:18:59,285 - sqlalchemy.engine.Engine - INFO - INSERT INTO claims (application_number, farmer_name, mobile_number, crop, season, year, state, district, village, land_area, sum_insured, premium_paid, claim_amount, payment_reference, claim_status, payment_status, current_stage, completion_percentage, error_message, action_needed, rejection_reason, appeal_possible, officer_name, officer_contact, created_at, approval_date, payment_date, verification_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, updated_at
+2026-10-20 19:18:59,286 - sqlalchemy.engine.Engine - INFO - [generated in 0.00071s] ('78901', 'Vijay Singh', '9876543214', 'Maize', 'Kharif', 2026, 'Uttar Pradesh', 'Meerut', 'Sardhana', 2.0, 40000.0, 1600.0, None, None, 'Rejected', 'Not Applicable', 5, 100, None, None, 'Crop damage not covered under policy terms. Damage caused by pest attack, which is excluded from coverage.', True, None, None, '2026-09-30 19:18:59.267310', '2026-10-15 19:18:59.267311', None, None)
+2026-10-20 19:18:59,289 - sqlalchemy.engine.Engine - INFO - INSERT INTO claims (application_number, farmer_name, mobile_number, crop, season, year, state, district, village, land_area, sum_insured, premium_paid, claim_amount, payment_reference, claim_status, payment_status, current_stage, completion_percentage, error_message, action_needed, rejection_reason, appeal_possible, officer_name, officer_contact, created_at, approval_date, payment_date, verification_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, updated_at
+2026-10-20 19:18:59,289 - sqlalchemy.engine.Engine - INFO - [generated in 0.00071s] ('33445', 'Meena Sharma', '9876543215', 'Bajra', 'Kharif', 2026, 'Rajasthan', 'Jodhpur', 'Phalodi', 6.0, 120000.0, 4800.0, 60000.0, None, 'Field Verification Pending', 'Not Applicable', 4, 70, None, None, None, 0, 'Inspector Rajesh Kumar', '9876501234', '2026-10-12 19:18:59.267664', None, None, '2026-10-25 19:18:59.267662')
+2026-10-20 19:18:59,293 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,294 - sqlalchemy.engine.Engine - INFO - [generated in 0.00021s (insertmanyvalues) 1/36 (ordered; batch not supported)] (1, 1, 'Application Received', 'Completed', None, None, None, '2026-10-05 19:18:59.266264')
+2026-10-20 19:18:59,295 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,296 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 2/36 (ordered; batch not supported)] (1, 2, 'Initial Verification', 'Completed', None, None, None, '2026-10-06 19:18:59.266340')
+2026-10-20 19:18:59,297 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,297 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 3/36 (ordered; batch not supported)] (1, 3, 'Document Review', 'Completed', None, None, None, '2026-10-10 19:18:59.266367')
+2026-10-20 19:18:59,299 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,299 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 4/36 (ordered; batch not supported)] (1, 4, 'Field Verification', 'Completed', None, None, None, '2026-10-15 19:18:59.266391')
+2026-10-20 19:18:59,300 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,301 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 5/36 (ordered; batch not supported)] (1, 5, 'Approval', 'Completed', None, None, None, '2026-10-18 19:18:59.266412')
+2026-10-20 19:18:59,302 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,302 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 6/36 (ordered; batch not supported)] (1, 6, 'Payment Processing', 'Completed', None, None, None, '2026-10-19 19:18:59.266437')
+2026-10-20 19:18:59,303 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,304 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 7/36 (ordered; batch not supported)] (2, 1, 'Application Received', 'Completed', None, None, None, '2026-10-15 19:18:59.266609')
+2026-10-20 19:18:59,305 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,305 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 8/36 (ordered; batch not supported)] (2, 2, 'Initial Verification', 'Completed', None, None, None, '2026-10-16 19:18:59.266640')
+2026-10-20 19:18:59,306 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,307 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 9/36 (ordered; batch not supported)] (2, 3, 'Document Review', 'In Progress', 'Waiting for Land Record and Sowing Certificate', None, None, None)
+2026-10-20 19:18:59,308 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,308 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 10/36 (ordered; batch not supported)] (2, 4, 'Field Verification', 'Pending', None, None, None, None)
+2026-10-20 19:18:59,309 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,309 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 11/36 (ordered; batch not supported)] (2, 5, 'Approval', 'Pending', None, None, None, None)
+2026-10-20 19:18:59,310 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,311 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 12/36 (ordered; batch not supported)] (2, 6, 'Payment Processing', 'Pending', None, None, None, None)
+2026-10-20 19:18:59,312 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,312 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 13/36 (ordered; batch not supported)] (3, 1, 'Application Received', 'Completed', None, None, None, '2026-10-17 19:18:59.266882')
+2026-10-20 19:18:59,313 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,314 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 14/36 (ordered; batch not supported)] (3, 2, 'Initial Verification', 'Failed', 'Season-crop mismatch detected', None, None, None)
+2026-10-20 19:18:59,315 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,316 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 15/36 (ordered; batch not supported)] (3, 3, 'Document Review', 'Pending', None, None, None, None)
+2026-10-20 19:18:59,317 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,318 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 16/36 (ordered; batch not supported)] (3, 4, 'Field Verification', 'Pending', None, None, None, None)
+2026-10-20 19:18:59,319 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,319 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 17/36 (ordered; batch not supported)] (3, 5, 'Approval', 'Pending', None, None, None, None)
+2026-10-20 19:18:59,320 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,321 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 18/36 (ordered; batch not supported)] (3, 6, 'Payment Processing', 'Pending', None, None, None, None)
+2026-10-20 19:18:59,322 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,322 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 19/36 (ordered; batch not supported)] (4, 1, 'Application Received', 'Completed', None, None, None, '2026-10-10 19:18:59.267164')
+2026-10-20 19:18:59,323 - app.main - INFO - Environment: development
+2026-10-20 19:18:59,323 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-20 19:18:59,323 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,323 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 20/36 (ordered; batch not supported)] (4, 2, 'Initial Verification', 'Completed', None, None, None, '2026-10-11 19:18:59.267194')
+2026-10-20 19:18:59,324 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,325 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 21/36 (ordered; batch not supported)] (4, 3, 'Document Review', 'Completed', None, None, None, '2026-10-14 19:18:59.267216')
+2026-10-20 19:18:59,326 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,326 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 22/36 (ordered; batch not supported)] (4, 4, 'Field Verification', 'Completed', None, None, None, '2026-10-16 19:18:59.267237')
+2026-10-20 19:18:59,327 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:18:59,327 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,327 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-20 19:18:59,327 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,328 - app.main - INFO - Environment: development
+2026-10-20 19:18:59,328 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-20 19:18:59,331 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-20 19:18:59,332 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,334 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:18:59,335 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-20 19:18:59,335 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-20 19:18:59,335 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,336 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,338 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-20 19:18:59,339 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,340 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-20 19:18:59,341 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,342 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-20 19:18:59,347 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-20 19:18:59,348 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:18:59,354 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:18:59,359 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-20 19:18:59,360 - sqlalchemy.engine.Engine - INFO - [generated in 0.00062s] ()
+2026-10-20 19:18:59,367 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-20 19:18:59,368 - sqlalchemy.engine.Engine - INFO - [generated in 0.00152s] ()
+2026-10-20 19:18:59,381 - sqlalchemy.engine.Engine - INFO - INSERT INTO claims (application_number, farmer_name, mobile_number, crop, season, year, state, district, village, land_area, sum_insured, premium_paid, claim_amount, payment_reference, claim_status, payment_status, current_stage, completion_percentag ... 175 characters truncated ...  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, updated_at
+2026-10-20 19:18:59,382 - sqlalchemy.engine.Engine - INFO - [generated in 0.00059s (insertmanyvalues) 1/4 (ordered; batch not supported)] ('12345', 'Ramesh Kumar', '9876543210', 'Rice', 'Kharif', 2026, 'Maharashtra', 'Nashik', 'Pimpalgaon', 2.5, 50000.0, 2000.0, 25000.0, 'PAY2026001', 'Approved', 'Processed', 6, 100, None, None, None, 0, None, None, '2026-10-05 19:18:59.373236', '2026-10-18 19:18:59.373249', '2026-10-19 19:18:59.373250', None)
+2026-10-20 19:18:59,392 - sqlalchemy.engine.Engine - INFO - INSERT INTO claims (application_number, farmer_name, mobile_number, crop, season, year, state, district, village, land_area, sum_insured, premium_paid, claim_amount, payment_reference, claim_status, payment_status, current_stage, completion_percentag ... 175 characters truncated ...  ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, updated_at
+2026-10-20 19:18:59,393 - sqlalchemy.engine.Engine - INFO - [generated in 0.00031s (insertmanyvalues) 1/4 (ordered; batch not supported)] ('12345', 'Ramesh Kumar', '9876543210', 'Rice', 'Kharif', 2026, 'Maharashtra', 'Nashik', 'Pimpalgaon', 2.5, 50000.0, 2000.0, 25000.0, 'PAY2026001', 'Approved', 'Processed', 6, 100, None, None, None, 0, None, None, '2026-10-05 19:18:59.385621', '2026-10-18 19:18:59.385649', '2026-10-19 19:18:59.385653', None)
+2026-10-20 19:18:59,440 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,440 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 24/36 (ordered; batch not supported)] (4, 6, 'Payment Processing', 'In Progress', 'Payment initiated. Expected: 3-5 business days', None, None, None)
+2026-10-20 19:18:59,441 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,441 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 25/36 (ordered; batch not supported)] (5, 1, 'Application Received', 'Completed', None, None, None, '2026-09-30 19:18:59.267505')
+2026-10-20 19:18:59,442 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,442 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 26/36 (ordered; batch not supported)] (5, 2, 'Initial Verification', 'Completed', None, None, None, '2026-10-01 19:18:59.267539')
+2026-10-20 19:18:59,443 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,443 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 27/36 (ordered; batch not supported)] (5, 3, 'Document Review', 'Completed', None, None, None, '2026-10-05 19:18:59.267563')
+2026-10-20 19:18:59,444 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,444 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 28/36 (ordered; batch not supported)] (5, 4, 'Field Verification', 'Completed', None, None, None, '2026-10-10 19:18:59.267587')
+2026-10-20 19:18:59,445 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,445 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 29/36 (ordered; batch not supported)] (5, 5, 'Approval', 'Completed', 'Claim rejected: Pest attack damage not covered. Appeal possible by 15-Nov-2026.', None, None, '2026-10-15 19:18:59.267611')
+2026-10-20 19:18:59,446 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,447 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 30/36 (ordered; batch not supported)] (5, 6, 'Payment Processing', 'Pending', None, None, None, None)
+2026-10-20 19:18:59,448 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,448 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 31/36 (ordered; batch not supported)] (6, 1, 'Application Received', 'Completed', None, None, None, '2026-10-12 19:18:59.267848')
+2026-10-20 19:18:59,449 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,449 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 32/36 (ordered; batch not supported)] (6, 2, 'Initial Verification', 'Completed', None, None, None, '2026-10-13 19:18:59.267882')
+2026-10-20 19:18:59,450 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,450 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 33/36 (ordered; batch not supported)] (6, 3, 'Document Review', 'Completed', None, None, None, '2026-10-16 19:18:59.267907')
+2026-10-20 19:18:59,451 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,451 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 34/36 (ordered; batch not supported)] (6, 4, 'Field Verification', 'In Progress', 'Scheduled for 25 October 2026. Officer: Inspector Rajesh Kumar (9876501234)', None, None, None)
+2026-10-20 19:18:59,452 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,453 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 35/36 (ordered; batch not supported)] (6, 5, 'Approval', 'Pending', None, None, None, None)
+2026-10-20 19:18:59,453 - sqlalchemy.engine.Engine - INFO - INSERT INTO activities (claim_id, stage_number, stage_name, status, notes, performed_by, started_at, completed_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, created_at
+2026-10-20 19:18:59,453 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 36/36 (ordered; batch not supported)] (6, 6, 'Payment Processing', 'Pending', None, None, None, None)
+2026-10-20 19:18:59,455 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,455 - sqlalchemy.engine.Engine - INFO - [generated in 0.00013s (insertmanyvalues) 1/6 (ordered; batch not supported)] (1, 'Aadhaar Card', 'aadhaar_12345.pdf', None, None, None, 'Verified', None, None, None, '2026-10-06 19:18:59.265957', None)
+2026-10-20 19:18:59,456 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,457 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 2/6 (ordered; batch not supported)] (1, 'Bank Details', 'bank_12345.pdf', None, None, None, 'Verified', None, None, None, '2026-10-06 19:18:59.266163', None)
+2026-10-20 19:18:59,457 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,458 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 3/6 (ordered; batch not supported)] (1, 'Land Record', 'land_12345.pdf', None, None, None, 'Verified', None, None, None, '2026-10-07 19:18:59.266210', None)
+2026-10-20 19:18:59,458 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,458 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 4/6 (ordered; batch not supported)] (1, 'Sowing Certificate', 'sowing_12345.pdf', None, None, None, 'Verified', None, None, None, '2026-10-08 19:18:59.266239', None)
+2026-10-20 19:18:59,459 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,459 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 5/6 (ordered; batch not supported)] (2, 'Aadhaar Card', 'aadhaar_67890.pdf', None, None, None, 'Verified', None, None, None, '2026-10-16 19:18:59.266515', None)
+2026-10-20 19:18:59,460 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,460 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 6/6 (ordered; batch not supported)] (2, 'Bank Details', 'bank_67890.pdf', None, None, None, 'Verified', None, None, None, '2026-10-16 19:18:59.266553', None)
+2026-10-20 19:18:59,461 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, uploaded_at
+2026-10-20 19:18:59,461 - sqlalchemy.engine.Engine - INFO - [generated in 0.00010s (insertmanyvalues) 1/2 (ordered; batch not supported)] (2, 'Land Record', None, None, None, None, 'Pending', None, None, None, None)
+2026-10-20 19:18:59,462 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, uploaded_at
+2026-10-20 19:18:59,463 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 2/2 (ordered; batch not supported)] (2, 'Sowing Certificate', None, None, None, None, 'Pending', None, None, None, None)
+2026-10-20 19:18:59,465 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,465 - sqlalchemy.engine.Engine - INFO - [cached since 0.009455s ago (insertmanyvalues) 1/2 (ordered; batch not supported)] (3, 'Aadhaar Card', 'aadhaar_11223.pdf', None, None, None, 'Verified', None, None, None, '2026-10-18 19:18:59.266778', None)
+2026-10-20 19:18:59,467 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,467 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 2/2 (ordered; batch not supported)] (3, 'Bank Details', 'bank_11223.pdf', None, None, None, 'Verified', None, None, None, '2026-10-18 19:18:59.266822', None)
+2026-10-20 19:18:59,469 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, uploaded_at
+2026-10-20 19:18:59,469 - sqlalchemy.engine.Engine - INFO - [cached since 0.007482s ago (insertmanyvalues) 1/2 (ordered; batch not supported)] (3, 'Land Record', None, None, None, None, 'Pending', None, None, None, None)
+2026-10-20 19:18:59,470 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id, uploaded_at
+2026-10-20 19:18:59,470 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 2/2 (ordered; batch not supported)] (3, 'Sowing Certificate', None, None, None, None, 'Pending', None, None, None, None)
+2026-10-20 19:18:59,471 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,471 - sqlalchemy.engine.Engine - INFO - [cached since 0.01597s ago (insertmanyvalues) 1/14 (ordered; batch not supported)] (4, 'Aadhaar Card', 'aadhaar_44556.pdf', None, None, None, 'Verified', None, None, None, '2026-10-11 19:18:59.267060', None)
+2026-10-20 19:18:59,472 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,472 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 2/14 (ordered; batch not supported)] (4, 'Bank Details', 'bank_44556.pdf', None, None, None, 'Verified', None, None, None, '2026-10-11 19:18:59.267096', None)
+2026-10-20 19:18:59,473 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,473 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 3/14 (ordered; batch not supported)] (4, 'Land Record', 'land_44556.pdf', None, None, None, 'Verified', None, None, None, '2026-10-12 19:18:59.267119', None)
+2026-10-20 19:18:59,474 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,474 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 4/14 (ordered; batch not supported)] (4, 'Sowing Certificate', 'sowing_44556.pdf', None, None, None, 'Verified', None, None, None, '2026-10-13 19:18:59.267142', None)
+2026-10-20 19:18:59,475 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,475 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 5/14 (ordered; batch not supported)] (5, 'Aadhaar Card', 'aadhaar_78901.pdf', None, None, None, 'Verified', None, None, None, '2026-10-01 19:18:59.267361', None)
+2026-10-20 19:18:59,476 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,476 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 6/14 (ordered; batch not supported)] (5, 'Bank Details', 'bank_78901.pdf', None, None, None, 'Verified', None, None, None, '2026-10-01 19:18:59.267408', None)
+2026-10-20 19:18:59,477 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,477 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 7/14 (ordered; batch not supported)] (5, 'Land Record', 'land_78901.pdf', None, None, None, 'Verified', None, None, None, '2026-10-02 19:18:59.267435', None)
+2026-10-20 19:18:59,477 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,477 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 8/14 (ordered; batch not supported)] (5, 'Sowing Certificate', 'sowing_78901.pdf', None, None, None, 'Verified', None, None, None, '2026-10-03 19:18:59.267459', None)
+2026-10-20 19:18:59,478 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,478 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 9/14 (ordered; batch not supported)] (5, 'Crop Photos', 'crop_78901.jpg', None, None, None, 'Verified', None, None, None, '2026-10-04 19:18:59.267482', None)
+2026-10-20 19:18:59,479 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,480 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 10/14 (ordered; batch not supported)] (6, 'Aadhaar Card', 'aadhaar_33445.pdf', None, None, None, 'Verified', None, None, None, '2026-10-13 19:18:59.267717', None)
+2026-10-20 19:18:59,482 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,483 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 11/14 (ordered; batch not supported)] (6, 'Bank Details', 'bank_33445.pdf', None, None, None, 'Verified', None, None, None, '2026-10-13 19:18:59.267754', None)
+2026-10-20 19:18:59,484 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,484 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 12/14 (ordered; batch not supported)] (6, 'Land Record', 'land_33445.pdf', None, None, None, 'Verified', None, None, None, '2026-10-14 19:18:59.267779', None)
+2026-10-20 19:18:59,485 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,486 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 13/14 (ordered; batch not supported)] (6, 'Sowing Certificate', 'sowing_33445.pdf', None, None, None, 'Verified', None, None, None, '2026-10-14 19:18:59.267804', None)
+2026-10-20 19:18:59,487 - sqlalchemy.engine.Engine - INFO - INSERT INTO documents (claim_id, document_type, file_name, file_path, file_size, mime_type, status, verified_by, verification_notes, rejection_reason, uploaded_at, verified_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) RETURNING id
+2026-10-20 19:18:59,487 - sqlalchemy.engine.Engine - INFO - [insertmanyvalues 14/14 (ordered; batch not supported)] (6, 'Crop Photos', 'crop_33445.jpg', None, None, None, 'Verified', None, None, None, '2026-10-15 19:18:59.267826', None)
+2026-10-20 19:18:59,488 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-20 19:18:59,511 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-20 19:18:59,542 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-20 19:18:59,773 - app.main - INFO - Environment: development
+2026-10-20 19:18:59,773 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-20 19:18:59,778 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:18:59,779 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-20 19:18:59,780 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,785 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-20 19:18:59,786 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,787 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-20 19:18:59,788 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,794 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-20 19:18:59,799 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:18:59,817 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-20 19:18:59,817 - sqlalchemy.engine.Engine - INFO - [generated in 0.00059s] ()
+2026-10-20 19:18:59,825 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-20 19:18:59,837 - app.main - INFO - Environment: development
+2026-10-20 19:18:59,837 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-20 19:18:59,841 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:18:59,841 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-20 19:18:59,842 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,844 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-20 19:18:59,844 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,845 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-20 19:18:59,845 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:18:59,852 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-20 19:18:59,856 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:18:59,867 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-20 19:18:59,867 - sqlalchemy.engine.Engine - INFO - [generated in 0.00049s] ()
+2026-10-20 19:18:59,872 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-20 19:19:13,973 - app.main - INFO - Environment: development
+2026-10-20 19:19:13,973 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-20 19:19:13,975 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:19:13,975 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-20 19:19:13,975 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:19:13,976 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-20 19:19:13,976 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:19:13,977 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-20 19:19:13,977 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-20 19:19:13,980 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-20 19:19:13,983 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:19:13,989 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-20 19:19:13,989 - sqlalchemy.engine.Engine - INFO - [generated in 0.00029s] ()
+2026-10-20 19:19:13,993 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-20 19:19:44,939 - app.routes.claims - INFO - Fetching claim: 12345
+2026-10-20 19:19:44,940 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-20 19:19:44,941 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-20 19:19:44,941 - sqlalchemy.engine.Engine - INFO - [generated in 0.00032s] ('12345',)
+2026-10-20 19:19:44,945 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-20 19:19:44,945 - sqlalchemy.engine.Engine - INFO - [generated in 0.00041s] (1,)
+2026-10-20 19:19:44,947 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-20 19:19:44,948 - sqlalchemy.engine.Engine - INFO - [generated in 0.00029s] (1,)
+2026-10-20 19:19:44,954 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:11:59,924 - app.routes.claims - INFO - Fetching claim: 67890
+2026-10-21 01:11:59,995 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:12:00,006 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:12:00,008 - sqlalchemy.engine.Engine - INFO - [cached since 2.114e+04s ago] ('67890',)
+2026-10-21 01:12:00,034 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:12:00,035 - sqlalchemy.engine.Engine - INFO - [cached since 2.114e+04s ago] (2,)
+2026-10-21 01:12:00,055 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:12:00,057 - sqlalchemy.engine.Engine - INFO - [cached since 2.114e+04s ago] (2,)
+2026-10-21 01:12:00,094 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:12:56,046 - app.routes.claims - INFO - Fetching claim: 67890
+2026-10-21 01:12:56,048 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:12:56,050 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:12:56,051 - sqlalchemy.engine.Engine - INFO - [cached since 2.119e+04s ago] ('67890',)
+2026-10-21 01:12:56,056 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:12:56,057 - sqlalchemy.engine.Engine - INFO - [cached since 2.119e+04s ago] (2,)
+2026-10-21 01:12:56,063 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:12:56,064 - sqlalchemy.engine.Engine - INFO - [cached since 2.119e+04s ago] (2,)
+2026-10-21 01:12:56,082 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:13:13,494 - app.routes.claims - INFO - Fetching claim: 67890
+2026-10-21 01:13:13,496 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:13,498 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:13:13,507 - sqlalchemy.engine.Engine - INFO - [cached since 2.121e+04s ago] ('67890',)
+2026-10-21 01:13:13,513 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:13:13,514 - sqlalchemy.engine.Engine - INFO - [cached since 2.121e+04s ago] (2,)
+2026-10-21 01:13:13,536 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:13:13,545 - sqlalchemy.engine.Engine - INFO - [cached since 2.121e+04s ago] (2,)
+2026-10-21 01:13:13,577 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:13:43,007 - app.main - INFO - Environment: development
+2026-10-21 01:13:43,010 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-21 01:13:43,010 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-21 01:13:43,012 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-21 01:13:43,038 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:43,042 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-21 01:13:43,043 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-21 01:13:43,045 - sqlalchemy.engine.Engine - INFO 2026-10-21 01:13:43,045 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:43,048 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:43,051 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-21 01:13:43,053 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-21 01:13:43,054 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:43,055 - sqlalchemy.engine.Engine - INFO - PRAGMA main.ta2026-10-21 01:13:43,056 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:43,057 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:43,060 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-21 01:13:43,060 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-21 01:13:43,061 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+ble_info("activities")
+2026-10-21 01:13:43,062 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:43,063 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:43,065 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:43,151 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:13:43,153 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:13:43,153 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:13:43,155 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:13:43,157 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:13:43,171 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:43,171 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:43,185 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:43,189 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:43,190 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:43,210 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-21 01:13:43,211 - sqlalchemy.engine.Engine - INFO - [generated in 0.00147s] ()
+2026-10-21 01:13:43,211 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-21 01:13:43,212 - sqlalchemy.engine.Engine - INFO - [generated in 0.00128s] ()
+2026-10-21 01:13:43,224 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-21 01:13:43,226 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-21 01:13:43,228 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-21 01:13:43,245 - sqlalchemy.engine.Engine - INFO - [generated in 0.02075s] ()
+2026-10-21 01:13:43,245 - sqlalchemy.engine.Engine - INFO - [generated in 0.01913s] ()
+2026-10-21 01:13:43,246 - sqlalchemy.engine.Engine - INFO - [generated in 0.01828s] ()
+2026-10-21 01:13:43,423 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-21 01:13:43,423 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-21 01:13:43,427 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-21 01:13:43,518 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-21 01:13:43,519 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-21 01:13:48,933 - app.main - INFO - Environment: development
+2026-10-21 01:13:48,934 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-21 01:13:48,938 - app.main - INFO - Environment: development
+2026-10-21 01:13:48,939 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-21 01:13:48,945 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:48,947 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-21 01:13:48,949 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:48,950 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:48,952 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-21 01:13:48,953 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:48,957 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-21 01:13:48,959 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+ble_info("documents")
+2026-10-21 01:13:48,960 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:48,961 - app.main - INFO - Environment: development
+2026-10-21 01:13:48,962 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-21 01:13:48,963 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-21 01:13:48,963 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-21 01:13:48,965 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:48,972 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:48,974 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-21 01:13:48,975 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:48,981 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-21 01:13:48,983 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:48,987 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:13:48,988 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-21 01:13:48,989 - app.main - INFO - Environment: development
+2026-10-21 01:13:48,989 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:48,990 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:13:48,991 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-21 01:13:49,000 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:49,002 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-21 01:13:49,003 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:49,009 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:49,009 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-21 01:13:49,009 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:49,011 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:49,015 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-21 01:13:49,021 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:49,022 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:13:49,051 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-21 01:13:49,092 - sqlalchemy.engine.Engine - INFO - [generated in 0.04086s] ()
+2026-10-21 01:13:49,092 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-21 01:13:49,193 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:13:49,194 - app.main - INFO - Environment: development
+2026-10-21 01:13:49,178 - sqlalchemy.engine.Engine - INFO - [generated in 0.08648s] ()
+2026-10-21 01:13:49,194 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-21 01:13:49,195 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:49,205 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-21 01:13:49,209 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:49,210 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-21 01:13:49,212 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:49,218 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-21 01:13:49,221 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 01:13:49,230 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-21 01:13:49,236 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-21 01:13:49,239 - sqlalchemy.engine.Engine - INFO - [generated in 0.00417s] ()
+2026-10-21 01:13:49,242 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-21 01:13:49,251 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:49,262 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:13:49,264 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-21 01:13:49,280 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:13:49,292 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-21 01:13:49,293 - sqlalchemy.engine.Engine - INFO - [generated in 0.00154s] ()
+2026-10-21 01:13:49,313 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-21 01:13:49,315 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-21 01:13:49,316 - sqlalchemy.engine.Engine - INFO - [generated in 0.00151s] ()
+2026-10-21 01:13:49,336 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-21 01:14:05,791 - app.routes.claims - INFO - Fetching claim: 67890
+2026-10-21 01:14:05,792 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:14:05,801 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:14:05,802 - sqlalchemy.engine.Engine - INFO - [generated in 0.00132s] ('67890',)
+2026-10-21 01:14:05,819 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:14:05,820 - sqlalchemy.engine.Engine - INFO - [generated in 0.00170s] (2,)
+2026-10-21 01:14:05,830 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:14:05,832 - sqlalchemy.engine.Engine - INFO - [generated in 0.00204s] (2,)
+2026-10-21 01:14:05,863 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:14:15,204 - app.routes.claims - INFO - Fetching claim: 67890
+2026-10-21 01:14:15,263 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:14:15,270 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:14:15,273 - sqlalchemy.engine.Engine - INFO - [cached since 9.473s ago] ('67890',)
+2026-10-21 01:14:15,296 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:14:15,307 - sqlalchemy.engine.Engine - INFO - [cached since 9.489s ago] (2,)
+2026-10-21 01:14:15,318 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:14:15,323 - sqlalchemy.engine.Engine - INFO - [cached since 9.494s ago] (2,)
+2026-10-21 01:14:15,365 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:16:16,160 - app.routes.claims - INFO - Fetching claim: 4565
+2026-10-21 01:16:16,185 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:16:16,370 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:16:16,405 - sqlalchemy.engine.Engine - INFO - [cached since 130.6s ago] ('4565',)
+2026-10-21 01:16:16,792 - app.routes.claims - WARNING - Claim not found: 4565
+2026-10-21 01:16:16,918 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-21 01:16:17,092 - app.database - ERROR - Database error: 404: Claim not found
+2026-10-21 01:17:04,912 - app.routes.claims - INFO - Fetching claim: 12345
+2026-10-21 01:17:04,921 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:17:04,927 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:17:04,943 - sqlalchemy.engine.Engine - INFO - [cached since 179.1s ago] ('12345',)
+2026-10-21 01:17:04,954 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:17:04,960 - sqlalchemy.engine.Engine - INFO - [cached since 179.1s ago] (1,)
+2026-10-21 01:17:04,976 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:17:04,981 - sqlalchemy.engine.Engine - INFO - [cached since 179.2s ago] (1,)
+2026-10-21 01:17:05,104 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:17:05,198 - app.routes.claims - INFO - Fetching claim: 67890
+2026-10-21 01:17:05,200 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:17:05,201 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:17:05,201 - sqlalchemy.engine.Engine - INFO - [cached since 179.4s ago] ('67890',)
+2026-10-21 01:17:05,206 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:17:05,207 - sqlalchemy.engine.Engine - INFO - [cached since 179.4s ago] (2,)
+2026-10-21 01:17:05,212 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:17:05,212 - sqlalchemy.engine.Engine - INFO - [cached since 179.4s ago] (2,)
+2026-10-21 01:17:05,224 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:17:05,264 - app.routes.claims - INFO - Fetching claim: 11223
+2026-10-21 01:17:05,265 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:17:05,267 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:17:05,267 - sqlalchemy.engine.Engine - INFO - [cached since 179.5s ago] ('11223',)
+2026-10-21 01:17:05,272 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:17:05,273 - sqlalchemy.engine.Engine - INFO - [cached since 179.5s ago] (3,)
+2026-10-21 01:17:05,276 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:17:05,277 - sqlalchemy.engine.Engine - INFO - [cached since 179.4s ago] (3,)
+2026-10-21 01:17:05,290 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:17:05,330 - app.routes.claims - INFO - Fetching claim: 44556
+2026-10-21 01:17:05,332 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:17:05,333 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:17:05,334 - sqlalchemy.engine.Engine - INFO - [cached since 179.5s ago] ('44556',)
+2026-10-21 01:17:05,342 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:17:05,343 - sqlalchemy.engine.Engine - INFO - [cached since 179.5s ago] (4,)
+2026-10-21 01:17:05,358 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:17:05,359 - sqlalchemy.engine.Engine - INFO - [cached since 179.5s ago] (4,)
+2026-10-21 01:17:05,385 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:17:05,565 - app.routes.claims - INFO - Fetching claim: 78901
+2026-10-21 01:17:05,567 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:17:05,568 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:17:05,568 - sqlalchemy.engine.Engine - INFO - [cached since 179.8s ago] ('78901',)
+2026-10-21 01:17:05,574 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:17:05,574 - sqlalchemy.engine.Engine - INFO - [cached since 179.8s ago] (5,)
+2026-10-21 01:17:05,580 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:17:05,581 - sqlalchemy.engine.Engine - INFO - [cached since 179.8s ago] (5,)
+2026-10-21 01:17:05,595 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:17:05,631 - app.routes.claims - INFO - Fetching claim: 33445
+2026-10-21 01:17:05,632 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:17:05,633 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:17:05,634 - sqlalchemy.engine.Engine - INFO - [cached since 179.8s ago] ('33445',)
+2026-10-21 01:17:05,639 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:17:05,640 - sqlalchemy.engine.Engine - INFO - [cached since 179.8s ago] (6,)
+2026-10-21 01:17:05,644 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:17:05,645 - sqlalchemy.engine.Engine - INFO - [cached since 179.8s ago] (6,)
+2026-10-21 01:17:05,660 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:21:24,477 - app.routes.claims - INFO - Fetching claim: 12345
+2026-10-21 01:21:24,499 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:21:24,615 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:21:24,887 - sqlalchemy.engine.Engine - INFO - [cached since 439.1s ago] ('12345',)
+2026-10-21 01:21:25,046 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:21:25,067 - sqlalchemy.engine.Engine - INFO - [cached since 439.2s ago] (1,)
+2026-10-21 01:21:25,210 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:21:25,222 - sqlalchemy.engine.Engine - INFO - [cached since 439.4s ago] (1,)
+2026-10-21 01:21:25,891 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 01:21:28,128 - app.routes.claims - INFO - Fetching claim: 12345
+2026-10-21 01:21:28,143 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 01:21:28,155 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 01:21:28,162 - sqlalchemy.engine.Engine - INFO - [cached since 442.4s ago] ('12345',)
+2026-10-21 01:21:28,171 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 01:21:28,172 - sqlalchemy.engine.Engine - INFO - [cached since 442.4s ago] (1,)
+2026-10-21 01:21:28,182 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 01:21:28,189 - sqlalchemy.engine.Engine - INFO - [cached since 442.4s ago] (1,)
+2026-10-21 01:21:29,655 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 19:10:48,065 - app.main - INFO - Environment: development
+2026-10-21 19:10:48,067 - app.main - INFO - Database: sqlite+aiosqlite:///./kisan_insurance.db
+2026-10-21 19:10:48,070 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 19:10:48,070 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("claims")
+2026-10-21 19:10:48,071 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 19:10:48,072 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("documents")
+2026-10-21 19:10:48,072 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 19:10:48,073 - sqlalchemy.engine.Engine - INFO - PRAGMA main.table_info("activities")
+2026-10-21 19:10:48,073 - sqlalchemy.engine.Engine - INFO - [raw sql] ()
+2026-10-21 19:10:48,087 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 19:10:48,091 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 19:10:48,098 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims
+2026-10-21 19:10:48,098 - sqlalchemy.engine.Engine - INFO - [generated in 0.00035s] ()
+2026-10-21 19:10:48,111 - sqlalchemy.engine.Engine - INFO - ROLLBACK
+2026-10-21 19:11:23,946 - app.routes.claims - INFO - Fetching claim: 12345
+2026-10-21 19:11:23,947 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 19:11:23,949 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 19:11:23,949 - sqlalchemy.engine.Engine - INFO - [generated in 0.00029s] ('12345',)
+2026-10-21 19:11:23,952 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 19:11:23,952 - sqlalchemy.engine.Engine - INFO - [generated in 0.00027s] (1,)
+2026-10-21 19:11:23,955 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 19:11:23,955 - sqlalchemy.engine.Engine - INFO - [generated in 0.00025s] (1,)
+2026-10-21 19:11:23,961 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 19:11:24,030 - app.routes.claims - INFO - Fetching claim: 67890
+2026-10-21 19:11:24,031 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 19:11:24,031 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 19:11:24,031 - sqlalchemy.engine.Engine - INFO - [cached since 0.08229s ago] ('67890',)
+2026-10-21 19:11:24,032 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 19:11:24,032 - sqlalchemy.engine.Engine - INFO - [cached since 0.08022s ago] (2,)
+2026-10-21 19:11:24,034 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 19:11:24,034 - sqlalchemy.engine.Engine - INFO - [cached since 0.07911s ago] (2,)
+2026-10-21 19:11:24,037 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 19:11:24,051 - app.routes.claims - INFO - Fetching claim: 11223
+2026-10-21 19:11:24,052 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 19:11:24,052 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 19:11:24,052 - sqlalchemy.engine.Engine - INFO - [cached since 0.1037s ago] ('11223',)
+2026-10-21 19:11:24,055 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 19:11:24,055 - sqlalchemy.engine.Engine - INFO - [cached since 0.103s ago] (3,)
+2026-10-21 19:11:24,056 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 19:11:24,057 - sqlalchemy.engine.Engine - INFO - [cached since 0.1018s ago] (3,)
+2026-10-21 19:11:24,062 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 19:11:24,082 - app.routes.claims - INFO - Fetching claim: 44556
+2026-10-21 19:11:24,083 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 19:11:24,083 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 19:11:24,084 - sqlalchemy.engine.Engine - INFO - [cached since 0.1347s ago] ('44556',)
+2026-10-21 19:11:24,086 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 19:11:24,087 - sqlalchemy.engine.Engine - INFO - [cached since 0.1348s ago] (4,)
+2026-10-21 19:11:24,089 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 19:11:24,089 - sqlalchemy.engine.Engine - INFO - [cached since 0.1342s ago] (4,)
+2026-10-21 19:11:24,100 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 19:11:24,121 - app.routes.claims - INFO - Fetching claim: 78901
+2026-10-21 19:11:24,122 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 19:11:24,122 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 19:11:24,122 - sqlalchemy.engine.Engine - INFO - [cached since 0.1737s ago] ('78901',)
+2026-10-21 19:11:24,127 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 19:11:24,127 - sqlalchemy.engine.Engine - INFO - [cached since 0.1754s ago] (5,)
+2026-10-21 19:11:24,130 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 19:11:24,131 - sqlalchemy.engine.Engine - INFO - [cached since 0.1759s ago] (5,)
+2026-10-21 19:11:24,138 - sqlalchemy.engine.Engine - INFO - COMMIT
+2026-10-21 19:11:24,153 - app.routes.claims - INFO - Fetching claim: 33445
+2026-10-21 19:11:24,153 - sqlalchemy.engine.Engine - INFO - BEGIN (implicit)
+2026-10-21 19:11:24,154 - sqlalchemy.engine.Engine - INFO - SELECT claims.id, claims.application_number, claims.farmer_name, claims.mobile_number, claims.crop, claims.season, claims.year, claims.state, claims.district, claims.village, claims.land_area, claims.sum_insured, claims.premium_paid, claims.claim_amount, claims.payment_reference, claims.claim_status, claims.payment_status, claims.current_stage, claims.completion_percentage, claims.error_message, claims.action_needed, claims.rejection_reason, claims.appeal_possible, claims.officer_name, claims.officer_contact, claims.created_at, claims.updated_at, claims.approval_date, claims.payment_date, claims.verification_date 
+FROM claims 
+WHERE claims.application_number = ?
+2026-10-21 19:11:24,154 - sqlalchemy.engine.Engine - INFO - [cached since 0.2049s ago] ('33445',)
+2026-10-21 19:11:24,155 - sqlalchemy.engine.Engine - INFO - SELECT documents.claim_id AS documents_claim_id, documents.id AS documents_id, documents.document_type AS documents_document_type, documents.file_name AS documents_file_name, documents.file_path AS documents_file_path, documents.file_size AS documents_file_size, documents.mime_type AS documents_mime_type, documents.status AS documents_status, documents.verified_by AS documents_verified_by, documents.verification_notes AS documents_verification_notes, documents.rejection_reason AS documents_rejection_reason, documents.uploaded_at AS documents_uploaded_at, documents.verified_at AS documents_verified_at 
+FROM documents 
+WHERE documents.claim_id IN (?)
+2026-10-21 19:11:24,155 - sqlalchemy.engine.Engine - INFO - [cached since 0.203s ago] (6,)
+2026-10-21 19:11:24,156 - sqlalchemy.engine.Engine - INFO - SELECT activities.claim_id AS activities_claim_id, activities.id AS activities_id, activities.stage_number AS activities_stage_number, activities.stage_name AS activities_stage_name, activities.status AS activities_status, activities.notes AS activities_notes, activities.performed_by AS activities_performed_by, activities.created_at AS activities_created_at, activities.started_at AS activities_started_at, activities.completed_at AS activities_completed_at 
+FROM activities 
+WHERE activities.claim_id IN (?) ORDER BY activities.stage_number
+2026-10-21 19:11:24,157 - sqlalchemy.engine.Engine - INFO - [cached since 0.2016s ago] (6,)
+2026-10-21 19:11:24,162 - sqlalchemy.engine.Engine - INFO - COMMIT

@@ -1,0 +1,257 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manual Entry - Kisan Insurance</title>
+    
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/manual-entry.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <a href="index.html" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-leaf brand-icon"></i>
+                        <div class="brand-text">
+                            <h1>Kisan Insurance</h1>
+                            <p class="tagline">फसल बीमा दावा ट्रैकर</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="language-selector">
+                    <i class="fas fa-globe"></i>
+                    <select id="languageSelect" class="language-dropdown">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी</option>
+                        <option value="mr">मराठी</option>
+                        <option value="pa">ਪੰਜਾਬੀ</option>
+                        <option value="gu">ગુજરાતી</option>
+                        <option value="ta">தமிழ்</option>
+                    </select>                </div>
+
+                <div class="user-menu" id="userMenu">
+                    <span class="user-name" id="userGreeting"></span>
+                    <button class="signout-btn" onclick="signOut()" title="Sign Out">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="manual-entry-page">
+        <div class="container">
+            
+            <div class="back-navigation">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+
+            <section class="form-section">
+                <h2 class="page-title">📝 Manual Entry</h2>
+                <p class="page-subtitle">Enter your details to check claim status</p>
+
+                <!-- INTERVIEW POINT: HTML5 Form with validation -->
+                <form id="claimForm" class="claim-form">
+                    
+                    <!-- Application Number Field -->
+                    <!-- INTERVIEW POINT: required attribute for HTML5 validation -->
+                    <div class="form-group">
+                        <label for="applicationNumber" class="form-label">
+                            <i class="fas fa-file-alt"></i>
+                            Application Number *
+                        </label>
+                        <input 
+                            type="text" 
+                            id="applicationNumber" 
+                            name="applicationNumber"
+                            class="form-input"
+                            placeholder="Enter 4-6 digit application number"
+                            required
+                            pattern="\d{4,6}"
+                            title="Please enter 4-6 digit number"
+                        >
+                        <small class="form-hint">Example: 12345</small>
+                    </div>
+
+                    <!-- Season Dropdown -->
+                    <!-- INTERVIEW POINT: select element for predefined options -->
+                    <div class="form-group">
+                        <label for="season" class="form-label">
+                            <i class="fas fa-calendar-alt"></i>
+                            Season *
+                        </label>
+                        <select id="season" name="season" class="form-select" required>
+                            <option value="">-- Select Season --</option>
+                            <option value="Kharif">Kharif (Monsoon)</option>
+                            <option value="Rabi">Rabi (Winter)</option>
+                            <option value="Zaid">Zaid (Summer)</option>
+                        </select>
+                        <small class="form-hint">Select the crop season</small>
+                    </div>
+
+                    <!-- Year Selection -->
+                    <div class="form-group">
+                        <label for="year" class="form-label">
+                            <i class="fas fa-calendar"></i>
+                            Year *
+                        </label>
+                        <select id="year" name="year" class="form-select" required>
+                            <option value="">-- Select Year --</option>
+                            <option value="2026">2026</option>
+                            <option value="2025">2025</option>
+                            <option value="2024">2024</option>
+                        </select>
+                    </div>
+
+                    <!-- Crop Type -->
+                    <div class="form-group">
+                        <label for="crop" class="form-label">
+                            <i class="fas fa-seedling"></i>
+                            Crop Type *
+                        </label>
+                        <select id="crop" name="crop" class="form-select" required>
+                            <option value="">-- Select Crop --</option>
+                            <optgroup label="Cereals">
+                                <option value="Rice">Rice (चावल)</option>
+                                <option value="Wheat">Wheat (गेहूं)</option>
+                                <option value="Maize">Maize (मक्का)</option>
+                                <option value="Bajra">Bajra (बाजरा)</option>
+                                <option value="Jowar">Jowar (ज्वार)</option>
+                            </optgroup>
+                            <optgroup label="Cash Crops">
+                                <option value="Cotton">Cotton (कपास)</option>
+                                <option value="Sugarcane">Sugarcane (गन्ना)</option>
+                                <option value="Groundnut">Groundnut (मूंगफली)</option>
+                            </optgroup>
+                            <optgroup label="Pulses">
+                                <option value="Arhar">Arhar (अरहर)</option>
+                                <option value="Moong">Moong (मूंग)</option>
+                                <option value="Urad">Urad (उड़द)</option>
+                            </optgroup>
+                            <optgroup label="Others">
+                                <option value="Soybean">Soybean (सोयाबीन)</option>
+                                <option value="Sunflower">Sunflower (सूरजमुखी)</option>
+                            </optgroup>
+                        </select>
+                        <small class="form-hint">Select your insured crop</small>
+                    </div>
+
+                    <!-- Mobile Number (Optional) -->
+                    <!-- INTERVIEW POINT: type="tel" for mobile keyboards -->
+                    <div class="form-group">
+                        <label for="mobile" class="form-label">
+                            <i class="fas fa-mobile-alt"></i>
+                            Mobile Number (Optional)
+                        </label>
+                        <input 
+                            type="tel" 
+                            id="mobile" 
+                            name="mobile"
+                            class="form-input"
+                            placeholder="10-digit mobile number"
+                            pattern="[6-9]\d{9}"
+                            title="Enter valid 10-digit mobile number"
+                        >
+                        <small class="form-hint">For SMS updates</small>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-submit">
+                            <i class="fas fa-search"></i>
+                            Check Claim Status
+                        </button>
+                        <button type="reset" class="btn btn-reset">
+                            <i class="fas fa-redo"></i>
+                            Clear Form
+                        </button>
+                    </div>
+
+                </form>
+
+                <!-- Quick Tips -->
+                <div class="tips-section">
+                    <h3><i class="fas fa-lightbulb"></i> Quick Tips:</h3>
+                    <ul class="tips-list">
+                        <li>Application number is provided at time of registration</li>
+                        <li>Select the correct season and year for accurate results</li>
+                        <li>Mobile number is optional but helps for updates</li>
+                        <li>All fields marked with * are mandatory</li>
+                    </ul>
+                </div>
+
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-phone"></i> Toll Free: 1800-123-4567</p>
+                    <p><i class="fas fa-envelope"></i> support@kisaninsurance.gov.in</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="voice-input.html">Voice Input</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#help">Help Center</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kisan Insurance Portal | Powered by Ziro.Digital</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/manual-entry.js"></script>
+    <script>
+        // Auth guard — redirect to login if not signed in
+        (function() {
+            try {
+                if (!localStorage.getItem('kisan_session')) {
+                    window.location.replace('auth.html');
+                } else {
+                    var s = JSON.parse(localStorage.getItem('kisan_session'));
+                    var g = document.getElementById('userGreeting');
+                    if (g && s.name) g.textContent = s.name.split(' ')[0];
+                }
+            } catch(e) { window.location.replace('auth.html'); }
+        })();
+        function signOut() {
+            localStorage.removeItem('kisan_session');
+            window.location.href = 'auth.html';
+        }
+    </script>
+</body>
+</html>
+
+

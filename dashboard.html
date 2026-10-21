@@ -1,0 +1,486 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Claim Status Dashboard - Kisan Insurance</title>
+    
+    <!-- INTERVIEW POINT: Linking multiple stylesheets -->
+    <!-- Why? Modular CSS, easier maintenance, better caching -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <a href="index.html" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-leaf brand-icon"></i>
+                        <div class="brand-text">
+                            <h1>Kisan Insurance</h1>
+                            <p class="tagline">फसल बीमा दावा ट्रैकर</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="language-selector">
+                    <i class="fas fa-globe"></i>
+                    <select id="languageSelect" class="language-dropdown">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी</option>
+                        <option value="mr">मराठी</option>
+                        <option value="pa">ਪੰਜਾਬੀ</option>
+                        <option value="gu">ગુજરાતી</option>
+                        <option value="ta">தமிழ்</option>
+                    </select>                </div>
+
+                <div class="user-menu" id="userMenu">
+                    <span class="user-name" id="userGreeting"></span>
+                    <button class="signout-btn" onclick="signOut()" title="Sign Out">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="dashboard-page">
+        <div class="container">
+            
+            <div class="back-navigation">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+
+            <!-- APPLICATION HEADER -->
+            <!-- INTERVIEW POINT: Summary card pattern -->
+            <section class="app-header-section">
+                <div class="app-header-card">
+                    <div class="app-header-left">
+                        <h2 class="page-title">Claim Status Dashboard</h2>
+                        <div class="app-info-grid">
+                            <div class="app-info-item">
+                                <span class="info-label">Application Number:</span>
+                                <span class="info-value" id="appNumber">12345</span>
+                            </div>
+                            <div class="app-info-item">
+                                <span class="info-label">Season:</span>
+                                <span class="info-value" id="season">Kharif 2026</span>
+                            </div>
+                            <div class="app-info-item">
+                                <span class="info-label">Crop:</span>
+                                <span class="info-value" id="crop">Rice</span>
+                            </div>
+                            <div class="app-info-item">
+                                <span class="info-label">Application Date:</span>
+                                <span class="info-value" id="appDate">15 Oct 2026</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-header-right">
+                        <!-- INTERVIEW POINT: Dynamic status badge -->
+                        <div class="status-badge status-pending" id="statusBadge">
+                            <i class="fas fa-clock"></i>
+                            <span id="statusText">Under Review</span>
+                        </div>
+                        <p class="last-updated">Last updated: <span id="lastUpdated">Today, 2:30 PM</span></p>
+                        
+                        <!-- Voice Summary Button -->
+                        <button class="voice-summary-btn" id="voiceSummaryBtn" title="Hear status summary">
+                            <i class="fas fa-volume-up"></i> Hear Status Summary
+                        </button>
+                        
+                        <!-- Auto-speak toggle -->
+                        <label class="auto-speak-toggle">
+                            <input type="checkbox" id="autoSpeakDashboard" checked>
+                            <span>Auto-speak updates</span>
+                        </label>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TIMELINE SECTION -->
+            <!-- INTERVIEW POINT: Vertical timeline with CSS -->
+            <section class="timeline-section">
+                <h3 class="section-heading">
+                    <i class="fas fa-tasks"></i> Claim Processing Timeline
+                </h3>
+                
+                <div class="timeline">
+                    <!-- Timeline Item 1 - Completed -->
+                    <div class="timeline-item completed" data-status="completed">
+                        <div class="timeline-marker">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>Application Received</h4>
+                            <p>Your application has been successfully received</p>
+                            <span class="timeline-date">15 Oct 2026, 10:00 AM</span>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 - Completed -->
+                    <div class="timeline-item completed" data-status="completed">
+                        <div class="timeline-marker">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>Initial Verification</h4>
+                            <p>Basic details verified successfully</p>
+                            <span class="timeline-date">15 Oct 2026, 2:15 PM</span>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 - Current -->
+                    <div class="timeline-item current" data-status="current">
+                        <div class="timeline-marker">
+                            <i class="fas fa-sync fa-spin"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>Document Review</h4>
+                            <p>Your documents are being reviewed</p>
+                            <span class="timeline-date">In Progress</span>
+                            <!-- INTERVIEW POINT: Progress bar -->
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 60%"></div>
+                            </div>
+                            <small>60% Complete</small>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 4 - Pending -->
+                    <div class="timeline-item pending" data-status="pending">
+                        <div class="timeline-marker">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>Field Verification</h4>
+                            <p>On-site verification will be conducted</p>
+                            <span class="timeline-date">Pending</span>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 5 - Pending -->
+                    <div class="timeline-item pending" data-status="pending">
+                        <div class="timeline-marker">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>Approval</h4>
+                            <p>Final approval from insurance authority</p>
+                            <span class="timeline-date">Pending</span>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 6 - Pending -->
+                    <div class="timeline-item pending" data-status="pending">
+                        <div class="timeline-marker">
+                            <i class="fas fa-circle"></i>
+                        </div>
+                        <div class="timeline-content">
+                            <h4>Payment Processing</h4>
+                            <p>Claim amount will be transferred to your account</p>
+                            <span class="timeline-date">Pending</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TWO COLUMN LAYOUT -->
+            <div class="two-column-layout">
+                
+                <!-- LEFT COLUMN: DOCUMENTS -->
+                <section class="documents-section">
+                    <h3 class="section-heading">
+                        <i class="fas fa-file-alt"></i> Required Documents
+                    </h3>
+
+                    <!-- INTERVIEW POINT: Document checklist with status -->
+                    <div class="documents-list">
+                        <!-- Document Item 1 - Uploaded -->
+                        <div class="document-item status-uploaded">
+                            <div class="document-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="document-info">
+                                <h4>Aadhaar Card</h4>
+                                <p class="doc-status"><i class="fas fa-check-circle"></i> Uploaded</p>
+                                <small class="doc-date">Uploaded on 15 Oct 2026</small>
+                            </div>
+                            <div class="document-actions">
+                                <button class="btn-icon" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-icon" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Document Item 2 - Uploaded -->
+                        <div class="document-item status-uploaded">
+                            <div class="document-icon">
+                                <i class="fas fa-file-pdf"></i>
+                            </div>
+                            <div class="document-info">
+                                <h4>Bank Account Details</h4>
+                                <p class="doc-status"><i class="fas fa-check-circle"></i> Uploaded</p>
+                                <small class="doc-date">Uploaded on 15 Oct 2026</small>
+                            </div>
+                            <div class="document-actions">
+                                <button class="btn-icon" title="View">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                                <button class="btn-icon" title="Download">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Document Item 3 - Missing -->
+                        <div class="document-item status-missing">
+                            <div class="document-icon missing">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="document-info">
+                                <h4>Land Ownership Record</h4>
+                                <p class="doc-status"><i class="fas fa-times-circle"></i> Missing - Required</p>
+                                <small class="doc-hint">Upload 7/12 extract or property deed</small>
+                            </div>
+                            <div class="document-actions">
+                                <button class="btn-upload" data-doc="land-record">
+                                    <i class="fas fa-upload"></i> Upload
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Document Item 4 - Missing -->
+                        <div class="document-item status-missing">
+                            <div class="document-icon missing">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <div class="document-info">
+                                <h4>Crop Sowing Certificate</h4>
+                                <p class="doc-status"><i class="fas fa-times-circle"></i> Missing - Required</p>
+                                <small class="doc-hint">Certificate from agricultural officer</small>
+                            </div>
+                            <div class="document-actions">
+                                <button class="btn-upload" data-doc="sowing-cert">
+                                    <i class="fas fa-upload"></i> Upload
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Document Item 5 - Optional -->
+                        <div class="document-item status-optional">
+                            <div class="document-icon">
+                                <i class="fas fa-file-image"></i>
+                            </div>
+                            <div class="document-info">
+                                <h4>Crop Photos (Optional)</h4>
+                                <p class="doc-status"><i class="fas fa-info-circle"></i> Optional</p>
+                                <small class="doc-hint">Photos of damaged crop for faster processing</small>
+                            </div>
+                            <div class="document-actions">
+                                <button class="btn-upload" data-doc="crop-photos">
+                                    <i class="fas fa-camera"></i> Upload
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- RIGHT COLUMN: QUICK ACTIONS & INFO -->
+                <aside class="sidebar-section">
+                    
+                    <!-- Quick Actions Card -->
+                    <div class="quick-actions-card">
+                        <h3 class="section-heading">
+                            <i class="fas fa-bolt"></i> Quick Actions
+                        </h3>
+                        <div class="action-buttons-list">
+                            <button class="action-btn" id="downloadReportBtn">
+                                <i class="fas fa-file-download"></i>
+                                <span>Download Report</span>
+                            </button>
+                            <button class="action-btn" id="contactSupportBtn">
+                                <i class="fas fa-headset"></i>
+                                <span>Contact Support</span>
+                            </button>
+                            <button class="action-btn" id="updateInfoBtn">
+                                <i class="fas fa-edit"></i>
+                                <span>Update Information</span>
+                            </button>
+                            <button class="action-btn" id="trackAgainBtn">
+                                <i class="fas fa-search"></i>
+                                <span>Track Another Claim</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Important Information Card -->
+                    <div class="info-card">
+                        <h3 class="section-heading">
+                            <i class="fas fa-info-circle"></i> Important Information
+                        </h3>
+                        <div class="info-content">
+                            <div class="info-item">
+                                <i class="fas fa-clock"></i>
+                                <div>
+                                    <strong>Processing Time:</strong>
+                                    <p>2-3 business days remaining</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-exclamation-circle"></i>
+                                <div>
+                                    <strong>Action Required:</strong>
+                                    <p>Upload 2 missing documents</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-phone-alt"></i>
+                                <div>
+                                    <strong>Helpline:</strong>
+                                    <p>1800-123-4567 (Toll Free)</p>
+                                </div>
+                            </div>
+                            <div class="info-item">
+                                <i class="fas fa-envelope"></i>
+                                <div>
+                                    <strong>Email:</strong>
+                                    <p>support@kisaninsurance.gov.in</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Claim Amount Card (if approved) -->
+                    <div class="claim-amount-card" style="display: none;" id="claimAmountCard">
+                        <h3 class="section-heading">
+                            <i class="fas fa-rupee-sign"></i> Claim Amount
+                        </h3>
+                        <div class="amount-display">
+                            <span class="amount-label">Approved Amount:</span>
+                            <span class="amount-value">₹ 25,000</span>
+                        </div>
+                        <p class="amount-note">Payment will be transferred to registered bank account</p>
+                    </div>
+
+                </aside>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- FILE UPLOAD MODAL -->
+    <!-- INTERVIEW POINT: Modal pattern for overlays -->
+    <div class="modal" id="uploadModal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modalTitle">Upload Document</h3>
+                <button class="modal-close" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="modalDescription">Upload the required document</p>
+                
+                <!-- INTERVIEW POINT: File input with drag-drop -->
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p><strong>Choose a file</strong> or drag it here</p>
+                    <small>PDF, JPG, PNG (Max 5MB)</small>
+                    <input type="file" id="fileInput" accept=".pdf,.jpg,.jpeg,.png" style="display: none;">
+                </div>
+
+                <div class="file-preview" id="filePreview" style="display: none;">
+                    <i class="fas fa-file"></i>
+                    <span id="fileName">document.pdf</span>
+                    <button class="btn-remove" id="removeFile">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <div class="upload-progress" id="uploadProgress" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="uploadProgressFill"></div>
+                    </div>
+                    <span id="uploadProgressText">Uploading... 0%</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancelUpload">Cancel</button>
+                <button class="btn btn-primary" id="confirmUpload" disabled>
+                    <i class="fas fa-upload"></i> Upload Document
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-phone"></i> Toll Free: 1800-123-4567</p>
+                    <p><i class="fas fa-envelope"></i> support@kisaninsurance.gov.in</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="voice-input.html">Voice Input</a></li>
+                        <li><a href="manual-entry.html">Manual Entry</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kisan Insurance Portal | Powered by Ziro.Digital</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/script.js"></script>
+    <script src="js/dashboard.js"></script>
+    <script>
+        // Auth guard — redirect to login if not signed in
+        (function() {
+            try {
+                if (!localStorage.getItem('kisan_session')) {
+                    window.location.replace('auth.html');
+                } else {
+                    var s = JSON.parse(localStorage.getItem('kisan_session'));
+                    var g = document.getElementById('userGreeting');
+                    if (g && s.name) g.textContent = s.name.split(' ')[0];
+                }
+            } catch(e) { window.location.replace('auth.html'); }
+        })();
+        function signOut() {
+            localStorage.removeItem('kisan_session');
+            window.location.href = 'auth.html';
+        }
+    </script>
+</body>
+</html>
+
+

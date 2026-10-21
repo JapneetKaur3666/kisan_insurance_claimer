@@ -1,0 +1,22 @@
+# INTERVIEW POINT: Why these specific packages?
+
+# Core Framework
+fastapi==0.104.1          # Modern Python web framework, auto-generates API docs
+uvicorn==0.24.0           # ASGI server to run FastAPI (like Node.js for Express)
+
+# Database
+sqlalchemy==2.0.23        # ORM - Object Relational Mapper (Python classes → SQL)
+aiosqlite==0.19.0         # Async SQLite driver for better performance
+
+# Data Validation
+pydantic==2.5.0           # Data validation using Python type hints
+pydantic-settings==2.1.0  # Settings management from .env files
+
+# Security & Auth
+python-jose[cryptography]==3.3.0  # JWT token generation
+passlib[bcrypt]==1.7.4            # Password hashing
+python-multipart==0.0.6           # File upload support
+
+# Utilities
+python-dotenv==1.0.0      # Load environment variables from .env
+faker==20.1.0             # Generate fake test data

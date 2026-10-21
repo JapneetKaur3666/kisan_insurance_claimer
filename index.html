@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Kisan Crop Insurance Claim Tracker - Check your crop insurance status easily">
+    <title>Kisan Insurance - Crop Claim Tracker</title>
+    
+    <!-- Link to our CSS file -->
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Google Fonts for better typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    
+    <!-- HEADER SECTION -->
+    <!-- This contains logo, app name, and language selector -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <!-- Logo and Title -->
+                <div class="brand">
+                    <i class="fas fa-leaf brand-icon"></i>
+                    <div class="brand-text">
+                        <h1>Kisan Insurance</h1>
+                        <p class="tagline">फसल बीमा दावा ट्रैकर</p>
+                    </div>
+                </div>
+                
+                <!-- Language Selector - Prominent position -->
+                <div class="language-selector">
+                    <i class="fas fa-globe"></i>
+                    <select id="languageSelect" class="language-dropdown">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी</option>
+                        <option value="mr">मराठी</option>
+                        <option value="pa">ਪੰਜਾਬੀ</option>
+                        <option value="gu">ગુજરાતી</option>
+                        <option value="ta">தமிழ்</option>
+                    </select>
+                </div>
+
+                <!-- Farmer greeting + sign out -->
+                <div class="user-menu" id="userMenu">
+                    <span class="user-name" id="userGreeting"></span>
+                    <button class="signout-btn" onclick="signOut()" title="Sign Out">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <!-- Main welcome area with primary actions -->
+    <section class="hero">
+        <div class="container">
+            <!-- Welcome Message -->
+            <div class="hero-content">
+                <h2 class="hero-title">Welcome, Farmer! 🌾</h2>
+                <p class="hero-subtitle">Check your crop insurance claim status instantly</p>
+                <p class="hero-description">Use voice or type to track your application</p>
+            </div>
+
+            <!-- PRIMARY ACTION BUTTONS -->
+            <!-- Two main ways to check claim - Voice (preferred) or Manual -->
+            <div class="action-buttons">
+                <!-- Voice Input Button - Primary/Highlighted -->
+                <a href="voice-input.html" class="btn btn-primary btn-voice" id="voiceBtn" style="text-decoration: none;">
+                    <i class="fas fa-microphone"></i>
+                    <span class="btn-text">
+                        <strong>Check by Voice</strong>
+                        <small>Speak your application number</small>
+                    </span>
+                </a>
+
+                <!-- Manual Entry Button - Secondary option -->
+                <a href="manual-entry.html" class="btn btn-secondary btn-manual" id="manualBtn" style="text-decoration: none;">
+                    <i class="fas fa-keyboard"></i>
+                    <span class="btn-text">
+                        <strong>Manual Entry</strong>
+                        <small>Type your details</small>
+                    </span>
+                </a>
+            </div>
+
+            <!-- Visual Guide - How to use -->
+            <div class="how-to-use">
+                <p class="how-to-title">How to check your claim:</p>
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <p>Click Voice or Manual</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <p>Provide Application Number</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <p>View Status & Documents</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATISTICS SECTION -->
+    <!-- Shows trust indicators and real-time stats -->
+    <section class="stats-section">
+        <div class="container">
+            <h3 class="section-title">Live Statistics</h3>
+            <div class="stats-grid">
+                <!-- Stat Card 1 -->
+                <div class="stat-card">
+                    <i class="fas fa-check-circle stat-icon"></i>
+                    <h4 class="stat-number">1,234</h4>
+                    <p class="stat-label">Claims Processed Today</p>
+                </div>
+
+                <!-- Stat Card 2 -->
+                <div class="stat-card">
+                    <i class="fas fa-clock stat-icon"></i>
+                    <h4 class="stat-number">2-3 Days</h4>
+                    <p class="stat-label">Average Response Time</p>
+                </div>
+
+                <!-- Stat Card 3 -->
+                <div class="stat-card">
+                    <i class="fas fa-users stat-icon"></i>
+                    <h4 class="stat-number">50,000+</h4>
+                    <p class="stat-label">Registered Farmers</p>
+                </div>
+
+                <!-- Stat Card 4 -->
+                <div class="stat-card">
+                    <i class="fas fa-rupee-sign stat-icon"></i>
+                    <h4 class="stat-number">₹45 Cr</h4>
+                    <p class="stat-label">Total Claims Settled</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <!-- Highlights key features of the portal -->
+    <section class="features-section">
+        <div class="container">
+            <h3 class="section-title">Why Use Our Portal?</h3>
+            <div class="features-grid">
+                <!-- Feature 1 -->
+                <div class="feature-card">
+                    <i class="fas fa-language feature-icon"></i>
+                    <h4>Multi-Language Support</h4>
+                    <p>Available in 6+ Indian languages</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="feature-card">
+                    <i class="fas fa-bolt feature-icon"></i>
+                    <h4>Instant Updates</h4>
+                    <p>Real-time claim status tracking</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="feature-card">
+                    <i class="fas fa-mobile-alt feature-icon"></i>
+                    <h4>Mobile Friendly</h4>
+                    <p>Works on any smartphone</p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <h4>Secure & Safe</h4>
+                    <p>Your data is protected</p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div class="feature-card">
+                    <i class="fas fa-file-upload feature-icon"></i>
+                    <h4>Easy Upload</h4>
+                    <p>Upload documents via phone camera</p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div class="feature-card">
+                    <i class="fas fa-headset feature-icon"></i>
+                    <h4>24/7 Support</h4>
+                    <p>Helpline always available</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <!-- Contact Info -->
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-phone"></i> Toll Free: 1800-123-4567</p>
+                    <p><i class="fas fa-envelope"></i> support@kisaninsurance.gov.in</p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#help">Help Center</a></li>
+                        <li><a href="#about">About Scheme</a></li>
+                    </ul>
+                </div>
+
+                <!-- Social Media -->
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kisan Insurance Portal | Powered by Ziro.Digital | All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Link to JavaScript file -->
+    <script>
+        // Redirect to auth if not logged in
+        (function() {
+            const session = localStorage.getItem('kisan_session');
+            if (!session) { window.location.replace('auth.html'); }
+        })();
+    </script>
+    <script src="js/script.js"></script>
+</body>
+</html>

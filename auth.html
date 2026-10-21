@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kisan Insurance – Sign In / Sign Up</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-body">
+
+    <!-- ── Header ───────────────────────────────────────────── -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <i class="fas fa-leaf brand-icon"></i>
+                    <div class="brand-text">
+                        <h1>Kisan Insurance</h1>
+                        <p class="tagline">फसल बीमा दावा ट्रैकर</p>
+                    </div>
+                </div>
+                <div class="language-selector">
+                    <i class="fas fa-globe"></i>
+                    <select id="languageSelect" class="language-dropdown">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी</option>
+                        <option value="mr">मराठी</option>
+                        <option value="pa">ਪੰਜਾਬੀ</option>
+                        <option value="gu">ગુજરાતી</option>
+                        <option value="ta">தமிழ்</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- ── Auth card ─────────────────────────────────────────── -->
+    <main class="auth-page">
+        <div class="auth-container">
+
+            <!-- Illustration strip -->
+            <div class="auth-illustration">
+                <div class="illus-icon"><i class="fas fa-leaf"></i></div>
+                <h2>Kisan Insurance Portal</h2>
+                <p>Track your crop insurance claim status in seconds — by voice or text, in your language.</p>
+                <div class="illus-stats">
+                    <div><strong>50,000+</strong><span>Farmers</span></div>
+                    <div><strong>₹45 Cr</strong><span>Settled</span></div>
+                    <div><strong>6</strong><span>Languages</span></div>
+                </div>
+            </div>
+
+            <!-- Form panel -->
+            <div class="auth-panel">
+
+                <!-- Tabs -->
+                <div class="auth-tabs">
+                    <button class="tab-btn active" id="tabSignIn" onclick="switchTab('signin')">
+                        <i class="fas fa-sign-in-alt"></i> Sign In
+                    </button>
+                    <button class="tab-btn" id="tabSignUp" onclick="switchTab('signup')">
+                        <i class="fas fa-user-plus"></i> Sign Up
+                    </button>
+                </div>
+
+                <!-- ════════════ SIGN IN ════════════ -->
+                <div id="signinForm" class="auth-form active">
+                    <h3 class="form-heading">Welcome back!</h3>
+                    <p class="form-sub">Enter your mobile number to continue</p>
+
+                    <!-- Step 1 — phone + captcha -->
+                    <div id="si-step1">
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-mobile-alt"></i> Mobile Number</label>
+                            <div class="phone-input-wrap">
+                                <span class="phone-prefix">+91</span>
+                                <input type="tel" id="si-phone" class="form-input"
+                                       placeholder="Enter 10-digit number"
+                                       maxlength="10" inputmode="numeric">
+                            </div>
+                            <small class="form-hint">You'll receive an OTP on this number</small>
+                        </div>
+
+                        <!-- CAPTCHA -->
+                        <div class="captcha-box" id="si-captcha">
+                            <div class="captcha-inner">
+                                <div class="captcha-check-wrap">
+                                    <div class="captcha-checkbox" id="si-captcha-cb" onclick="verifyCaptcha('si')">
+                                        <div class="captcha-tick" id="si-tick"></div>
+                                    </div>
+                                </div>
+                                <span class="captcha-label">I'm not a robot</span>
+                            </div>
+                            <div class="captcha-brand">
+                                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA" onerror="this.style.display='none'">
+                                <small>reCAPTCHA</small>
+                            </div>
+                        </div>
+                        <p class="captcha-status" id="si-captcha-status"></p>
+
+                        <button class="btn-auth" id="si-send-otp" onclick="sendOTP('si')" disabled>
+                            <i class="fas fa-paper-plane"></i> Send OTP
+                        </button>
+                    </div>
+
+                    <!-- Step 2 — OTP -->
+                    <div id="si-step2" style="display:none">
+                        <p class="otp-sent-msg">
+                            <i class="fas fa-check-circle" style="color:#4CAF50"></i>
+                            OTP sent to <strong id="si-phone-display"></strong>
+                            <button class="link-btn" onclick="backToStep1('si')">Change</button>
+                        </p>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-lock"></i> Enter OTP</label>
+                            <div class="otp-boxes" id="si-otp-boxes">
+                                <input class="otp-input" maxlength="1" inputmode="numeric" data-index="0">
+                                <input class="otp-input" maxlength="1" inputmode="numeric" data-index="1">
+                                <input class="otp-input" maxlength="1" inputmode="numeric" data-index="2">
+                                <input class="otp-input" maxlength="1" inputmode="numeric" data-index="3">
+                                <input class="otp-input" maxlength="1" inputmode="numeric" data-index="4">
+                                <input class="otp-input" maxlength="1" inputmode="numeric" data-index="5">
+                            </div>
+                            <small class="form-hint">
+                                Auto-filled from SMS on supported browsers.
+                                <span id="si-resend-wrap">
+                                    Resend in <span id="si-timer">30</span>s
+                                </span>
+                                <button class="link-btn" id="si-resend-btn" onclick="resendOTP('si')" style="display:none">Resend OTP</button>
+                            </small>
+                        </div>
+
+                        <!-- Demo hint -->
+                        <div class="demo-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Demo mode — OTP is <strong id="si-demo-otp"></strong>
+                        </div>
+
+                        <button class="btn-auth" id="si-verify-btn" onclick="verifyOTP('si')">
+                            <i class="fas fa-sign-in-alt"></i> Verify & Sign In
+                        </button>
+                    </div>
+                </div>
+
+                <!-- ════════════ SIGN UP ════════════ -->
+                <div id="signupForm" class="auth-form">
+                    <h3 class="form-heading">Create your account</h3>
+                    <p class="form-sub">Register once, track all your claims</p>
+
+                    <!-- Step 1 — details + captcha -->
+                    <div id="su-step1">
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-user"></i> Full Name *</label>
+                                <input type="text" id="su-name" class="form-input" placeholder="Ramesh Kumar">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-map-marker-alt"></i> State *</label>
+                                <select id="su-state" class="form-select">
+                                    <option value="">Select State</option>
+                                    <option>Maharashtra</option>
+                                    <option>Punjab</option>
+                                    <option>Uttar Pradesh</option>
+                                    <option>Madhya Pradesh</option>
+                                    <option>Rajasthan</option>
+                                    <option>Gujarat</option>
+                                    <option>Karnataka</option>
+                                    <option>Andhra Pradesh</option>
+                                    <option>Tamil Nadu</option>
+                                    <option>West Bengal</option>
+                                    <option>Bihar</option>
+                                    <option>Haryana</option>
+                                    <option>Odisha</option>
+                                    <option>Telangana</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-city"></i> District</label>
+                                <input type="text" id="su-district" class="form-input" placeholder="e.g. Nashik">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-home"></i> Village</label>
+                                <input type="text" id="su-village" class="form-input" placeholder="e.g. Pimpalgaon">
+                            </div>
+                        </div>
+
+                        <div class="form-row-2">
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-id-card"></i> Aadhaar Number</label>
+                                <input type="text" id="su-aadhaar" class="form-input"
+                                       placeholder="XXXX XXXX XXXX" maxlength="14" inputmode="numeric">
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label"><i class="fas fa-seedling"></i> Primary Crop</label>
+                                <select id="su-crop" class="form-select">
+                                    <option value="">Select Crop</option>
+                                    <option>Rice</option><option>Wheat</option><option>Cotton</option>
+                                    <option>Maize</option><option>Soybean</option><option>Bajra</option>
+                                    <option>Groundnut</option><option>Sugarcane</option><option>Other</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-mobile-alt"></i> Mobile Number *</label>
+                            <div class="phone-input-wrap">
+                                <span class="phone-prefix">+91</span>
+                                <input type="tel" id="su-phone" class="form-input"
+                                       placeholder="10-digit mobile number"
+                                       maxlength="10" inputmode="numeric">
+                            </div>
+                            <small class="form-hint">This becomes your login ID</small>
+                        </div>
+
+                        <!-- CAPTCHA -->
+                        <div class="captcha-box" id="su-captcha">
+                            <div class="captcha-inner">
+                                <div class="captcha-check-wrap">
+                                    <div class="captcha-checkbox" id="su-captcha-cb" onclick="verifyCaptcha('su')">
+                                        <div class="captcha-tick" id="su-tick"></div>
+                                    </div>
+                                </div>
+                                <span class="captcha-label">I'm not a robot</span>
+                            </div>
+                            <div class="captcha-brand">
+                                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA" onerror="this.style.display='none'">
+                                <small>reCAPTCHA</small>
+                            </div>
+                        </div>
+                        <p class="captcha-status" id="su-captcha-status"></p>
+
+                        <button class="btn-auth" id="su-send-otp" onclick="sendOTP('su')" disabled>
+                            <i class="fas fa-paper-plane"></i> Send OTP to Verify
+                        </button>
+                    </div>
+
+                    <!-- Step 2 — OTP -->
+                    <div id="su-step2" style="display:none">
+                        <p class="otp-sent-msg">
+                            <i class="fas fa-check-circle" style="color:#4CAF50"></i>
+                            OTP sent to <strong id="su-phone-display"></strong>
+                            <button class="link-btn" onclick="backToStep1('su')">Change</button>
+                        </p>
+
+                        <div class="form-group">
+                            <label class="form-label"><i class="fas fa-lock"></i> Enter OTP</label>
+                            <div class="otp-boxes" id="su-otp-boxes">
+                                <input class="otp-input" maxlength="1" inputmode="numeric" data-index="0">
+                                <input class="otp-input" maxlength="1" inputmode="numeric" data-index="1">
+                                <input class="otp-input" maxlength="1" inputmode="numeric" data-index="2">
+                                <input class="otp-input" maxlength="1" inputmode="numeric" data-index="3">
+                                <input class="otp-input" maxlength="1" inputmode="numeric" data-index="4">
+                                <input class="otp-input" maxlength="1" inputmode="numeric" data-index="5">
+                            </div>
+                            <small class="form-hint">
+                                Auto-filled from SMS on supported browsers.
+                                <span id="su-resend-wrap">
+                                    Resend in <span id="su-timer">30</span>s
+                                </span>
+                                <button class="link-btn" id="su-resend-btn" onclick="resendOTP('su')" style="display:none">Resend OTP</button>
+                            </small>
+                        </div>
+
+                        <div class="demo-hint">
+                            <i class="fas fa-info-circle"></i>
+                            Demo mode — OTP is <strong id="su-demo-otp"></strong>
+                        </div>
+
+                        <button class="btn-auth" id="su-verify-btn" onclick="verifyOTP('su')">
+                            <i class="fas fa-user-check"></i> Verify & Register
+                        </button>
+                    </div>
+                </div>
+
+            </div><!-- /auth-panel -->
+        </div><!-- /auth-container -->
+    </main>
+
+    <footer class="footer" style="margin-top:0">
+        <div class="container">
+            <div class="footer-bottom" style="border:none; padding:12px 0">
+                <p>&copy; 2026 Kisan Insurance Portal | Powered by Ziro.Digital</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice Input - Kisan Insurance</title>
+    
+    <!-- INTERVIEW POINT: Linking external stylesheets -->
+    <!-- Why? Separation of concerns, reusability, caching -->
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/voice-input.css">
+    
+    <!-- INTERVIEW POINT: CDN (Content Delivery Network) -->
+    <!-- Why? Faster loading, cached across sites, reduced bandwidth -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    
+    <!-- HEADER - Reusing from landing page for consistency -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="brand">
+                    <!-- INTERVIEW POINT: Anchor tag for navigation -->
+                    <a href="index.html" style="color: white; text-decoration: none; display: flex; align-items: center; gap: 1rem;">
+                        <i class="fas fa-leaf brand-icon"></i>
+                        <div class="brand-text">
+                            <h1>Kisan Insurance</h1>
+                            <p class="tagline">फसल बीमा दावा ट्रैकर</p>
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="language-selector">
+                    <i class="fas fa-globe"></i>
+                    <select id="languageSelect" class="language-dropdown">
+                        <option value="en">English</option>
+                        <option value="hi">हिंदी</option>
+                        <option value="mr">मराठी</option>
+                        <option value="pa">ਪੰਜਾਬੀ</option>
+                        <option value="gu">ગુજરાતી</option>
+                        <option value="ta">தமிழ்</option>
+                    </select>                </div>
+
+                <div class="user-menu" id="userMenu">
+                    <span class="user-name" id="userGreeting"></span>
+                    <button class="signout-btn" onclick="signOut()" title="Sign Out">
+                        <i class="fas fa-sign-out-alt"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="voice-input-page">
+        <div class="container">
+            
+            <!-- BACK BUTTON - UX Best Practice -->
+            <!-- INTERVIEW POINT: Navigation breadcrumbs improve UX -->
+            <div class="back-navigation">
+                <a href="index.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i> Back to Home
+                </a>
+            </div>
+
+            <!-- VOICE INPUT SECTION -->
+            <section class="voice-section">
+                <h2 class="page-title">🎤 Voice Input</h2>
+                <p class="page-subtitle">Speak clearly to check your claim status</p>
+
+                <!-- MICROPHONE VISUAL CONTAINER -->
+                <!-- INTERVIEW POINT: Visual feedback is crucial for voice UX -->
+                <div class="mic-container">
+                    <!-- INTERVIEW POINT: data-* attributes for storing custom data -->
+                    <!-- Why? Stores state without polluting global namespace -->
+                    <button id="micBtn" class="mic-button" data-listening="false">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    
+                    <!-- INTERVIEW POINT: CSS animations for visual feedback -->
+                    <div class="sound-wave-container" id="soundWaves" style="display: none;">
+                        <div class="sound-wave"></div>
+                        <div class="sound-wave"></div>
+                        <div class="sound-wave"></div>
+                        <div class="sound-wave"></div>
+                        <div class="sound-wave"></div>
+                    </div>
+                </div>
+
+                <!-- STATUS INDICATOR -->
+                <!-- INTERVIEW POINT: Real-time user feedback -->
+                <div class="status-container">
+                    <p id="statusText" class="status-text">Tap the microphone to start</p>
+                    <div id="confidenceBar" class="confidence-bar" style="display: none;">
+                        <div class="confidence-fill"></div>
+                    </div>
+                </div>
+
+                <!-- EXAMPLE PHRASES - Guidance for users -->
+                <!-- INTERVIEW POINT: Progressive disclosure - show help when needed -->
+                <div class="example-container">
+                    <h3>📝 Example Phrases:</h3>
+                    <div class="examples">
+                        <div class="example-item">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"Application number 12345"</p>
+                        </div>
+                        <div class="example-item">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"Kharif season rice crop"</p>
+                        </div>
+                        <div class="example-item">
+                            <i class="fas fa-quote-left"></i>
+                            <p>"My application is 67890"</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LANGUAGE SELECTION FOR VOICE -->
+                <!-- INTERVIEW POINT: Voice recognition supports multiple languages -->
+                <div class="voice-language-section">
+                    <label for="voiceLanguage">
+                        <i class="fas fa-language"></i> Recognition Language:
+                    </label>
+                    <select id="voiceLanguage" class="voice-language-select">
+                        <option value="en-IN">English (India)</option>
+                        <option value="hi-IN">Hindi (हिंदी)</option>
+                        <option value="mr-IN">Marathi (मराठी)</option>
+                        <option value="pa-IN">Punjabi (ਪੰਜਾਬੀ)</option>
+                        <option value="gu-IN">Gujarati (ગુજરાતી)</option>
+                        <option value="ta-IN">Tamil (தமிழ்)</option>
+                    </select>
+                </div>
+                
+                <!-- AUTO-SPEAK TOGGLE -->
+                <div class="auto-speak-section">
+                    <label class="toggle-label">
+                        <input type="checkbox" id="autoSpeak" checked>
+                        <span class="toggle-text">
+                            <i class="fas fa-volume-up"></i> 
+                            Automatically speak results in my language
+                        </span>
+                    </label>
+                </div>
+            </section>
+
+            <!-- RECOGNIZED TEXT SECTION -->
+            <!-- INTERVIEW POINT: Show what was understood for verification -->
+            <section class="recognized-section" id="recognizedSection" style="display: none;">
+                <h3>What we heard:</h3>
+                <div class="recognized-text-box">
+                    <p id="recognizedText" class="recognized-text"></p>
+                    <div class="text-actions">
+                        <button id="speakBtn" class="speak-btn" title="Listen to recognized text">
+                            <i class="fas fa-volume-up"></i> Hear What We Understood
+                        </button>
+                        <button id="editBtn" class="edit-btn">
+                            <i class="fas fa-edit"></i> Edit
+                        </button>
+                    </div>
+                </div>
+
+                <!-- EXTRACTED INFORMATION -->
+                <!-- INTERVIEW POINT: Natural Language Processing (NLP) to extract data -->
+                <div class="extracted-info" id="extractedInfo">
+                    <h4>Extracted Information:</h4>
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <span class="info-label">Application Number:</span>
+                            <span id="extractedAppNo" class="info-value">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Season:</span>
+                            <span id="extractedSeason" class="info-value">-</span>
+                        </div>
+                        <div class="info-item">
+                            <span class="info-label">Crop:</span>
+                            <span id="extractedCrop" class="info-value">-</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ACTION BUTTONS -->
+                <div class="action-buttons-section">
+                    <button id="confirmBtn" class="btn btn-confirm">
+                        <i class="fas fa-check"></i> Confirm & Check Status
+                    </button>
+                    <button id="retryBtn" class="btn btn-retry">
+                        <i class="fas fa-redo"></i> Try Again
+                    </button>
+                </div>
+            </section>
+
+            <!-- BROWSER COMPATIBILITY CHECK -->
+            <!-- INTERVIEW POINT: Graceful degradation - provide alternatives -->
+            <section class="compatibility-notice" id="compatibilityNotice" style="display: none;">
+                <div class="notice-box warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <div>
+                        <h4>Voice Recognition Not Supported</h4>
+                        <p>Your browser doesn't support voice input. Please use:</p>
+                        <ul>
+                            <li>Google Chrome (recommended)</li>
+                            <li>Microsoft Edge</li>
+                            <li>Or switch to <a href="manual-entry.html">Manual Entry</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- RECENT SEARCHES -->
+            <!-- INTERVIEW POINT: LocalStorage for persistence -->
+            <section class="recent-searches" id="recentSearches" style="display: none;">
+                <h3>Recent Searches:</h3>
+                <div id="recentSearchesList" class="recent-list">
+                    <!-- Dynamically populated by JavaScript -->
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- FOOTER - Same as landing page -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h4>Contact Us</h4>
+                    <p><i class="fas fa-phone"></i> Toll Free: 1800-123-4567</p>
+                    <p><i class="fas fa-envelope"></i> support@kisaninsurance.gov.in</p>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="manual-entry.html">Manual Entry</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#help">Help Center</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-section">
+                    <h4>Follow Us</h4>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                        <a href="#"><i class="fab fa-whatsapp"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Kisan Insurance Portal | Powered by Ziro.Digital</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- INTERVIEW POINT: Script loading order matters -->
+    <!-- Why? Scripts at bottom = faster page load, DOM is ready -->
+    <script src="js/script.js"></script>
+    <script src="js/voice-recognition.js"></script>
+    <script>
+        // Auth guard — redirect to login if not signed in
+        (function() {
+            try {
+                if (!localStorage.getItem('kisan_session')) {
+                    window.location.replace('auth.html');
+                } else {
+                    var s = JSON.parse(localStorage.getItem('kisan_session'));
+                    var g = document.getElementById('userGreeting');
+                    if (g && s.name) g.textContent = s.name.split(' ')[0];
+                }
+            } catch(e) { window.location.replace('auth.html'); }
+        })();
+        function signOut() {
+            localStorage.removeItem('kisan_session');
+            window.location.href = 'auth.html';
+        }
+    </script>
+</body>
+</html>
+
+
