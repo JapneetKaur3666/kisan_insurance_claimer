@@ -752,3 +752,131 @@
     .action-btn i { font-size: 1.2rem; }
     .action-btn:hover { transform: translateX(4px); }
 }
+
+/* ============================================================
+   UNIFIED AGENT ADDITIONS — Approval Panel, Conversation Bar,
+   Banners, Toast, Traceability (appended by unified merge)
+   ============================================================ */
+
+/* ---- Payment warning banner (TC4) ---- */
+.payment-warning-banner {
+    background: #fff3e0; border: 2px solid #e65100; border-radius: 12px;
+    padding: 12px 16px; margin: 0 0 12px; color: #bf360c; font-size: 0.88rem;
+    display: flex; align-items: flex-start; gap: 10px; line-height: 1.5;
+}
+.payment-warning-banner i { color: #e65100; margin-top: 2px; flex-shrink: 0; }
+
+/* ---- UNCERTAIN banner ---- */
+.uncertain-banner {
+    background: #f3e5f5; border: 2px solid #7b1fa2; border-radius: 12px;
+    padding: 12px 16px; margin: 0 0 12px; color: #4a148c; font-size: 0.88rem;
+}
+.uncertain-banner i { color: #7b1fa2; margin-right: 8px; }
+
+/* ---- Approval Panel ---- */
+.approval-panel { background: rgba(0,0,0,0.5); position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 9000; display: flex; align-items: center; justify-content: center; padding: 16px; }
+.approval-card { background: #fff; border-radius: 16px; max-width: 480px; width: 100%; box-shadow: 0 8px 32px rgba(0,0,0,0.3); overflow: hidden; }
+.approval-header { background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%); color: #fff; padding: 16px 20px; display: flex; align-items: center; gap: 12px; }
+.approval-header i { font-size: 1.4rem; }
+.approval-header h3 { margin: 0; font-size: 1rem; font-weight: 600; }
+.approval-body { padding: 20px; }
+.approval-summary { font-size: 0.9rem; color: #333; margin-bottom: 16px; line-height: 1.5; }
+.approval-compare { display: grid; grid-template-columns: 1fr auto 1fr; gap: 8px; align-items: center; margin-bottom: 14px; }
+.compare-before, .compare-after { background: #f5f5f5; border-radius: 10px; padding: 10px 12px; }
+.compare-label { display: block; font-size: 0.75rem; color: #666; margin-bottom: 4px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+.compare-value { display: block; font-size: 1rem; font-weight: 700; color: #212121; }
+.compare-before { border-left: 4px solid #ef5350; }
+.compare-after { border-left: 4px solid #2E7D32; }
+.compare-arrow { color: #666; font-size: 1.2rem; text-align: center; }
+.approval-safety { font-size: 0.8rem; color: #555; background: #f9fbe7; border: 1px solid #c5e1a5; border-radius: 8px; padding: 8px 12px; display: flex; gap: 8px; align-items: flex-start; }
+.approval-safety i { color: #2E7D32; margin-top: 2px; flex-shrink: 0; }
+.approval-actions { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid #e0e0e0; }
+.btn-approval { padding: 16px; font-size: 1rem; font-weight: 700; font-family: 'Poppins', sans-serif; border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: background 0.15s; }
+.btn-reject { background: #fff; color: #c62828; border-right: 1px solid #e0e0e0; border-radius: 0 0 0 16px; }
+.btn-reject:hover { background: #ffebee; }
+.btn-approve { background: #2E7D32; color: #fff; border-radius: 0 0 16px 0; }
+.btn-approve:hover { background: #1B5E20; }
+.btn-approve:disabled, .btn-reject:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ---- Conversation Bar ---- */
+.conversation-bar { background: #fff; border-top: 2px solid #e0e0e0; padding: 12px 0; position: sticky; bottom: 0; z-index: 100; box-shadow: 0 -2px 8px rgba(0,0,0,0.08); }
+.agent-reply-box { background: #e8f5e9; border: 1px solid #a5d6a7; border-radius: 12px; padding: 10px 14px; margin-bottom: 10px; display: flex; align-items: flex-start; gap: 10px; }
+.agent-reply-box i { color: #2E7D32; flex-shrink: 0; margin-top: 2px; }
+.agent-reply-box p { margin: 0; font-size: 0.88rem; flex: 1; line-height: 1.5; }
+.hear-again-btn { background: none; border: none; color: #2E7D32; cursor: pointer; padding: 4px; font-size: 0.9rem; flex-shrink: 0; }
+.quick-options-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+.quick-option-btn { background: #f1f8e9; border: 1.5px solid #2E7D32; color: #1B5E20; border-radius: 20px; padding: 6px 14px; font-size: 0.8rem; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; display: flex; align-items: center; gap: 6px; white-space: nowrap; }
+.quick-option-btn:hover { background: #dcedc8; }
+.chat-form { display: flex; gap: 8px; align-items: center; }
+.chat-mic-btn { width: 44px; height: 44px; border-radius: 50%; background: #f1f8e9; border: 1.5px solid #2E7D32; color: #2E7D32; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1rem; }
+.chat-mic-btn.listening { background: #ffeb3b; border-color: #f57f17; animation: pulse-mic 1s infinite; }
+@keyframes pulse-mic { 50% { box-shadow: 0 0 0 6px rgba(245, 127, 23, 0.2); } }
+#chatInput { flex: 1; min-height: 44px; border: 1.5px solid #ccc; border-radius: 22px; padding: 0 16px; font-family: 'Poppins', sans-serif; font-size: 0.88rem; outline: none; }
+#chatInput:focus { border-color: #2E7D32; }
+.chat-send-btn { width: 44px; height: 44px; border-radius: 50%; background: #2E7D32; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.chat-send-btn:hover { background: #1B5E20; }
+
+/* ---- Traceability card ---- */
+.traceability-card { margin-top: 12px; font-size: 0.82rem; }
+.trace-row { display: flex; gap: 8px; align-items: baseline; padding: 3px 0; border-bottom: 1px solid #f0f0f0; }
+.trace-row span:first-child { font-weight: 600; color: #666; min-width: 70px; flex-shrink: 0; }
+
+/* ---- Toast ---- */
+.toast-notification { position: fixed; bottom: 80px; left: 50%; transform: translateX(-50%); border-radius: 24px; padding: 12px 20px; font-size: 0.9rem; font-weight: 600; color: #fff; box-shadow: 0 4px 16px rgba(0,0,0,0.25); z-index: 99999; pointer-events: none; }
+
+/* ---- API loading / error banners ---- */
+.api-loading-banner { background: rgba(46,125,50,0.1); border: 1px solid #a5d6a7; border-radius: 8px; padding: 8px 14px; margin-bottom: 8px; color: #2E7D32; font-size: 0.88rem; }
+.api-error-banner { background: #ffebee; border: 1px solid #ef9a9a; border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; color: #c62828; font-size: 0.88rem; }
+
+/* ---- Quick-fill (manual entry) ---- */
+.quick-fill-section { margin: 20px 0; }
+.quick-fill-label { font-size: 0.88rem; font-weight: 600; color: var(--text-light); margin-bottom: 10px; }
+.quick-fill-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+.quick-fill-btn { padding: 10px 12px; background: #f1f8e9; border: 1.5px solid #2E7D32; border-radius: 10px; color: #1B5E20; font-size: 0.8rem; font-weight: 600; font-family: 'Poppins', sans-serif; cursor: pointer; text-align: left; }
+.quick-fill-btn:hover { background: #dcedc8; }
+@media (max-width: 480px) { .quick-fill-grid { grid-template-columns: 1fr; } }
+
+/* ---- Rejection card ---- */
+.rejection-card { border-left: 4px solid #c62828; margin-top: 12px; }
+
+/* ============================================================
+   DOCUMENT SAMPLE + QUALITY CHECK ADDITIONS
+   ============================================================ */
+
+/* Sample preview thumbnail inside doc card */
+.doc-sample-preview { margin: 8px 0 4px; cursor: pointer; display: inline-block; }
+.doc-sample-img { width: 100%; max-width: 180px; height: 90px; object-fit: cover; border-radius: 8px; border: 2px solid #2E7D32; display: block; transition: transform 0.2s; }
+.doc-sample-img:hover { transform: scale(1.04); }
+.doc-sample-label { font-size: 0.72rem; color: #2E7D32; font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 4px; }
+
+/* Sample in upload modal */
+.modal-sample-box { background: #f1f8e9; border: 1.5px solid #a5d6a7; border-radius: 10px; padding: 10px 12px; margin-bottom: 12px; }
+.modal-sample-label { font-size: 0.8rem; font-weight: 700; color: #2E7D32; margin-bottom: 6px; display: flex; align-items: center; gap: 6px; }
+.modal-sample-img { width: 100%; max-height: 140px; object-fit: contain; border-radius: 6px; border: 1px solid #c8e6c9; margin-bottom: 6px; }
+.modal-sample-box small { font-size: 0.76rem; color: #555; line-height: 1.4; display: block; }
+
+/* Quality tip on doc card */
+.doc-quality-tip { background: #fff8e1; border-left: 3px solid #ffc107; border-radius: 0 6px 6px 0; padding: 6px 10px; margin: 6px 0; font-size: 0.78rem; color: #5d4037; display: flex; gap: 6px; align-items: flex-start; line-height: 1.45; }
+.doc-quality-tip i { color: #ffc107; flex-shrink: 0; margin-top: 2px; }
+
+/* Inline check items on doc card */
+.doc-checks { display: flex; flex-wrap: wrap; gap: 4px; margin: 6px 0; }
+.doc-check-item { font-size: 0.73rem; padding: 2px 8px; border-radius: 10px; display: inline-flex; align-items: center; gap: 4px; font-weight: 600; }
+.doc-check-item.ok { background: #e8f5e9; color: #2e7d32; }
+.doc-check-item.fail { background: #ffebee; color: #c62828; }
+
+/* Quality card in sidebar */
+.doc-quality-card { margin-top: 12px; }
+.doc-checks.large { display: flex; flex-direction: column; gap: 6px; margin: 8px 0; }
+.doc-check-row { display: flex; align-items: flex-start; gap: 8px; font-size: 0.82rem; line-height: 1.4; padding: 4px 0; border-bottom: 1px solid #f0f0f0; }
+.doc-check-row.ok i { color: #2e7d32; flex-shrink: 0; margin-top: 2px; }
+.doc-check-row.fail i { color: #c62828; flex-shrink: 0; margin-top: 2px; }
+.quality-ok-msg { color: #2e7d32; font-weight: 600; font-size: 0.85rem; margin-top: 8px; display: flex; align-items: center; gap: 6px; }
+.quality-fail-msg { color: #e65100; font-weight: 600; font-size: 0.82rem; margin-top: 8px; display: flex; align-items: center; gap: 6px; }
+
+/* Sample lightbox */
+.sample-lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 99000; display: flex; align-items: center; justify-content: center; }
+.lightbox-overlay { background: rgba(0,0,0,0.88); width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 20px; cursor: pointer; }
+.lightbox-overlay img { max-width: 92vw; max-height: 75vh; object-fit: contain; border-radius: 10px; border: 3px solid #fff; }
+.lightbox-close { position: absolute; top: 16px; right: 20px; color: #fff; font-size: 1.6rem; cursor: pointer; background: rgba(0,0,0,0.5); width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.lightbox-caption { color: rgba(255,255,255,0.85); font-size: 0.85rem; margin-top: 12px; text-align: center; font-family: "Poppins", sans-serif; }

@@ -39,10 +39,6 @@
                     <select id="languageSelect" class="language-dropdown">
                         <option value="en">English</option>
                         <option value="hi">हिंदी</option>
-                        <option value="mr">मराठी</option>
-                        <option value="pa">ਪੰਜਾਬੀ</option>
-                        <option value="gu">ગુજરાતી</option>
-                        <option value="ta">தமிழ்</option>
                     </select>                </div>
 
                 <div class="user-menu" id="userMenu">
@@ -129,10 +125,6 @@
                     <select id="voiceLanguage" class="voice-language-select">
                         <option value="en-IN">English (India)</option>
                         <option value="hi-IN">Hindi (हिंदी)</option>
-                        <option value="mr-IN">Marathi (मराठी)</option>
-                        <option value="pa-IN">Punjabi (ਪੰਜਾਬੀ)</option>
-                        <option value="gu-IN">Gujarati (ગુજરાતી)</option>
-                        <option value="ta-IN">Tamil (தமிழ்)</option>
                     </select>
                 </div>
                 
@@ -261,6 +253,7 @@
 
     <!-- INTERVIEW POINT: Script loading order matters -->
     <!-- Why? Scripts at bottom = faster page load, DOM is ready -->
+    <script src="js/config.js"></script>
     <script src="js/script.js"></script>
     <script src="js/voice-recognition.js"></script>
     <script>
@@ -283,5 +276,7 @@
     </script>
 </body>
 </html>
+
+
 
 

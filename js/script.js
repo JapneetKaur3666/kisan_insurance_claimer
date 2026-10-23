@@ -1,4 +1,4 @@
-/* ============================================
+﻿/* ============================================
    KISAN INSURANCE - LANDING PAGE JAVASCRIPT
    ============================================ */
 
@@ -39,8 +39,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // VOICE BUTTON FUNCTIONALITY
     // ============================================
     const voiceBtn = document.getElementById('voiceBtn');
-    
-    voiceBtn.addEventListener('click', function() {
+    if (voiceBtn) voiceBtn.addEventListener('click', function() {
         console.log('Voice button clicked');
         
         // Add visual feedback - button shake animation
@@ -65,8 +64,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // MANUAL BUTTON FUNCTIONALITY
     // ============================================
     const manualBtn = document.getElementById('manualBtn');
-    
-    manualBtn.addEventListener('click', function() {
+    if (manualBtn) manualBtn.addEventListener('click', function() {
         console.log('Manual entry button clicked');
         
         showNotification('📝 Manual entry form coming soon! This will open the form page.', 'info');
@@ -338,3 +336,4 @@ function signOut() {
     localStorage.removeItem('kisan_session');
     window.location.href = 'auth.html';
 }
+

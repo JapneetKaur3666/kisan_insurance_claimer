@@ -33,10 +33,6 @@
                     <select id="languageSelect" class="language-dropdown">
                         <option value="en">English</option>
                         <option value="hi">हिंदी</option>
-                        <option value="mr">मराठी</option>
-                        <option value="pa">ਪੰਜਾਬੀ</option>
-                        <option value="gu">ગુજરાતી</option>
-                        <option value="ta">தமிழ்</option>
                     </select>                </div>
 
                 <div class="user-menu" id="userMenu">
@@ -180,6 +176,25 @@
                     </div>
 
                 </form>
+                <!-- TC Quick-Fill Buttons -->
+                <div class="quick-fill-section">
+                    <p class="quick-fill-label"><i class="fas fa-bolt"></i> Try official test cases:</p>
+                    <div class="quick-fill-grid">
+                        <button type="button" class="quick-fill-btn" onclick="fillAppNo('KRB-2026-00417')" title="TC1: Under Review — Paddy, Kharif 2026">
+                            TC1: Under Review
+                        </button>
+                        <button type="button" class="quick-fill-btn" onclick="fillAppNo('KRB-2026-00521')" title="TC2: Missing Document — Land Record (Khatauni)">
+                            TC2: Missing Doc
+                        </button>
+                        <button type="button" class="quick-fill-btn" onclick="fillAppNo('KRB-2026-00633')" title="TC3: Season Mismatch — Kharif/Rabi">
+                            TC3: Season Fix
+                        </button>
+                        <button type="button" class="quick-fill-btn" onclick="fillAppNo('KRB-2026-00748')" title="TC4: Approved but NOT paid yet">
+                            TC4: Approved
+                        </button>
+                    </div>
+                </div>
+
 
                 <!-- Quick Tips -->
                 <div class="tips-section">
@@ -231,6 +246,7 @@
         </div>
     </footer>
 
+    <script src="js/config.js"></script>
     <script src="js/script.js"></script>
     <script src="js/manual-entry.js"></script>
     <script>
@@ -253,5 +269,8 @@
     </script>
 </body>
 </html>
+
+
+
 
 

@@ -35,10 +35,6 @@
                     <select id="languageSelect" class="language-dropdown">
                         <option value="en">English</option>
                         <option value="hi">हिंदी</option>
-                        <option value="mr">मराठी</option>
-                        <option value="pa">ਪੰਜਾਬੀ</option>
-                        <option value="gu">ગુજરાતી</option>
-                        <option value="ta">தமிழ்</option>
                     </select>                </div>
 
                 <div class="user-menu" id="userMenu">
@@ -380,6 +376,82 @@
 
         </div>
     </main>
+    <!-- AGENT CONVERSATION BAR — follow-up questions without leaving dashboard -->
+    <div class="conversation-bar" id="conversationBar">
+        <div class="container">
+            <div class="agent-reply-box" id="agentReplyBox" style="display:none;">
+                <i class="fas fa-robot"></i>
+                <p id="agentReplyText"></p>
+                <button class="hear-again-btn" id="hearAgainBtn" title="Hear again · फिर सुनें">
+                    <i class="fas fa-volume-up"></i>
+                </button>
+            </div>
+            <div class="quick-options-row">
+                <button class="quick-option-btn" data-msg="what is my claim status">
+                    <i class="fas fa-search"></i> Status
+                </button>
+                <button class="quick-option-btn" data-msg="what documents are missing">
+                    <i class="fas fa-file-alt"></i> Documents
+                </button>
+                <button class="quick-option-btn" data-msg="the season in my record is wrong">
+                    <i class="fas fa-calendar-alt"></i> Fix Season
+                </button>
+                <button class="quick-option-btn" data-msg="i need help">
+                    <i class="fas fa-headset"></i> Help
+                </button>
+            </div>
+            <form class="chat-form" id="chatForm" autocomplete="off">
+                <button type="button" class="chat-mic-btn" id="chatMicBtn" title="Speak · बोलें">
+                    <i class="fas fa-microphone"></i>
+                </button>
+                <label for="chatInput" class="sr-only">Ask a question</label>
+                <input type="text" id="chatInput" placeholder="Ask a question or say 'fix season'... · कुछ पूछें या बोलें" maxlength="500" autocomplete="off">
+                <button type="submit" class="chat-send-btn" aria-label="Send">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- APPROVAL PANEL — shown when agent proposes a change (TC2 season/doc) -->
+    <section class="approval-panel" id="approvalPanel" style="display:none;">
+        <div class="container">
+            <div class="approval-card">
+                <div class="approval-header">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Your Approval Required · आपकी मंज़ूरी चाहिए</h3>
+                </div>
+                <div class="approval-body">
+                    <p class="approval-summary" id="approvalSummary">Agent is proposing a change.</p>
+                    <div class="approval-compare">
+                        <div class="compare-before">
+                            <span class="compare-label">Current · अभी</span>
+                            <span class="compare-value" id="compareFrom">—</span>
+                        </div>
+                        <div class="compare-arrow"><i class="fas fa-arrow-right"></i></div>
+                        <div class="compare-after">
+                            <span class="compare-label">Proposed · बदलाव</span>
+                            <span class="compare-value" id="compareTo">—</span>
+                        </div>
+                    </div>
+                    <div class="approval-safety">
+                        <i class="fas fa-lock"></i>
+                        Reject = no change. Change only happens after your approval.
+                        रद्द करने पर कुछ नहीं बदलेगा।
+                    </div>
+                </div>
+                <div class="approval-actions">
+                    <button class="btn-approval btn-reject" id="rejectBtn">
+                        <i class="fas fa-times"></i> Reject · मना करें
+                    </button>
+                    <button class="btn-approval btn-approve" id="approveBtn">
+                        <i class="fas fa-check"></i> Approve · मंज़ूर
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- FILE UPLOAD MODAL -->
     <!-- INTERVIEW POINT: Modal pattern for overlays -->
@@ -441,6 +513,7 @@
                         <li><a href="voice-input.html">Voice Input</a></li>
                         <li><a href="manual-entry.html">Manual Entry</a></li>
                         <li><a href="#faq">FAQ</a></li>
+                        <li><a href="console.html">Judge Console</a></li>
                     </ul>
                 </div>
 
@@ -460,6 +533,7 @@
         </div>
     </footer>
 
+    <script src="js/config.js"></script>
     <script src="js/script.js"></script>
     <script src="js/dashboard.js"></script>
     <script>
@@ -482,5 +556,8 @@
     </script>
 </body>
 </html>
+
+
+
 
 

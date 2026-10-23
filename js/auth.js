@@ -1,20 +1,42 @@
-/* ============================================
+﻿/* ============================================
    AUTH PAGE JAVASCRIPT
    Sign In / Sign Up with OTP + CAPTCHA
    ============================================ */
 'use strict';
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    STATE
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const state = {
     si: { captchaDone: false, otpSent: false, generatedOTP: '', timerInterval: null },
     su: { captchaDone: false, otpSent: false, generatedOTP: '', timerInterval: null }
 };
+/* ── BACKEND AUTH INTEGRATION (non-blocking) ─────────────── */
+const AUTH_API = {
+    async signup(data) {
+        try {
+            const r = await fetch(API_BASE + '/api/auth/signup', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(data) });
+            return await r.json();
+        } catch (e) { return { error: e.message }; }
+    },
+    async requestOTP(mobile) {
+        try {
+            const r = await fetch(API_BASE + '/api/auth/otp/request', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mobile }) });
+            return await r.json();
+        } catch (e) { return { error: e.message }; }
+    },
+    async verifyOTP(mobile, otp) {
+        try {
+            const r = await fetch(API_BASE + '/api/auth/otp/verify', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ mobile, otp }) });
+            return await r.json();
+        } catch (e) { return { error: e.message }; }
+    }
+};
 
-/* ────────────────────────────────────────────
+
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    TAB SWITCH
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function switchTab(tab) {
     document.getElementById('signinForm').classList.toggle('active', tab === 'signin');
     document.getElementById('signupForm').classList.toggle('active', tab === 'signup');
@@ -22,9 +44,9 @@ function switchTab(tab) {
     document.getElementById('tabSignUp').classList.toggle('active', tab === 'signup');
 }
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    CAPTCHA (custom checkbox simulation)
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function verifyCaptcha(prefix) {
     const cb = document.getElementById(`${prefix}-captcha-cb`);
     const tick = document.getElementById(`${prefix}-tick`);
@@ -44,7 +66,7 @@ function verifyCaptcha(prefix) {
         captchaBox.classList.add('verified');
         state[prefix].captchaDone = true;
 
-        status.textContent = '✓ Verified — you are human!';
+        status.textContent = 'âœ“ Verified â€” you are human!';
         status.className = 'captcha-status success';
 
         // Enable send OTP button
@@ -55,16 +77,16 @@ function verifyCaptcha(prefix) {
     }, 1200);
 }
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    OTP GENERATION (6-digit random for demo)
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function generateOTP() {
     return String(Math.floor(100000 + Math.random() * 900000));
 }
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    SEND OTP
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function sendOTP(prefix) {
     const phoneInput = document.getElementById(`${prefix}-phone`);
     const phone = phoneInput.value.trim();
@@ -122,11 +144,11 @@ function sendOTP(prefix) {
     showNotification(`OTP sent to +91 ${phone.slice(0,5)}XXXXX (demo: ${otp})`, 'success');
 }
 
-/* ────────────────────────────────────────────
-   WEB OTP API — auto-fill from SMS
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   WEB OTP API â€” auto-fill from SMS
    Works on Android Chrome when page is served
    over HTTPS and SMS format matches spec
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 async function tryWebOTP(prefix) {
     if (!('OTPCredential' in window)) return; // not supported
 
@@ -142,7 +164,7 @@ async function tryWebOTP(prefix) {
             showNotification('OTP auto-filled from SMS', 'success');
         }
     } catch (err) {
-        // Silently ignore — user can type manually
+        // Silently ignore â€” user can type manually
         console.log('Web OTP API:', err.message);
     }
 }
@@ -158,9 +180,9 @@ function fillOTPBoxes(prefix, code) {
     });
 }
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    OTP BOX KEYBOARD NAVIGATION
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function setupOTPBoxes(prefix) {
     const boxes = document.querySelectorAll(`#${prefix}-otp-boxes .otp-input`);
 
@@ -209,9 +231,9 @@ function setupOTPBoxes(prefix) {
     });
 }
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    VERIFY OTP
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function verifyOTP(prefix) {
     const boxes = document.querySelectorAll(`#${prefix}-otp-boxes .otp-input`);
     const enteredOTP = [...boxes].map(b => b.value).join('');
@@ -232,7 +254,7 @@ function verifyOTP(prefix) {
         return;
     }
 
-    // OTP correct — show loading
+    // OTP correct â€” show loading
     const btn = document.getElementById(`${prefix}-verify-btn`);
     btn.disabled = true;
     btn.classList.add('loading');
@@ -246,9 +268,9 @@ function verifyOTP(prefix) {
     }, 800);
 }
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    COMPLETE SIGN IN
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function completeSignIn() {
     const phone = document.getElementById('si-phone').value.trim();
 
@@ -257,7 +279,7 @@ function completeSignIn() {
     const farmerData = farmers[phone];
 
     if (!farmerData) {
-        // Farmer not registered — nudge to sign up
+        // Farmer not registered â€” nudge to sign up
         showNotification('No account found. Please sign up first.', 'error');
         document.getElementById('si-verify-btn').disabled = false;
         document.getElementById('si-verify-btn').classList.remove('loading');
@@ -267,16 +289,16 @@ function completeSignIn() {
 
     // Save session
     saveSession(phone, farmerData);
-    showNotification(`Welcome back, ${farmerData.name}!`, 'success');
+        showNotification(`Welcome back, ${farmerData.name}!`, 'success');
 
     setTimeout(() => {
         window.location.href = 'index.html';
     }, 1000);
 }
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    COMPLETE SIGN UP
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function completeSignUp() {
     const phone    = document.getElementById('su-phone').value.trim();
     const name     = document.getElementById('su-name').value.trim();
@@ -301,6 +323,17 @@ function completeSignUp() {
 
     // Save session
     saveSession(phone, farmerData);
+    // Background backend registration (non-blocking; never blocks the UI)
+    (async () => {
+        const res = await AUTH_API.signup({ name, mobile: phone, village: village || 'Demo Village', district: district || 'Demo District', land_acres: '2', main_crop: crop || 'Paddy' });
+        if (!res.error && !res.error_code) {
+            const otpRes = await AUTH_API.requestOTP(phone);
+            if (otpRes.mock_otp) {
+                const verRes = await AUTH_API.verifyOTP(phone, otpRes.mock_otp);
+                if (verRes.token) localStorage.setItem('kisan_token', verRes.token);
+            }
+        }
+    })();
     showNotification(`Account created! Welcome, ${name}!`, 'success');
 
     setTimeout(() => {
@@ -308,10 +341,10 @@ function completeSignUp() {
     }, 1000);
 }
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    SESSION
-──────────────────────────────────────────── */
-function saveSession(phone, farmerData) {
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
+function saveSession(phone, farmerData, token) {
     const session = {
         phone,
         name: farmerData.name,
@@ -321,11 +354,12 @@ function saveSession(phone, farmerData) {
     };
     localStorage.setItem('kisan_session', JSON.stringify(session));
     localStorage.setItem('preferredLanguage', 'en');
+    if (token) localStorage.setItem('kisan_token', token);
 }
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    RESEND OTP TIMER
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function startResendTimer(prefix) {
     let seconds = 30;
     const timerEl = document.getElementById(`${prefix}-timer`);
@@ -366,9 +400,9 @@ function resendOTP(prefix) {
     document.getElementById(`${prefix}-phone-display`).textContent = `+91 ${phone.replace(/(\d{5})(\d{5})/, '$1 $2')}`;
 }
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    BACK TO STEP 1
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function backToStep1(prefix) {
     document.getElementById(`${prefix}-step1`).style.display = 'block';
     document.getElementById(`${prefix}-step2`).style.display = 'none';
@@ -376,9 +410,9 @@ function backToStep1(prefix) {
     if (state[prefix].timerInterval) clearInterval(state[prefix].timerInterval);
 }
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    AADHAAR FORMATTING (XXXX XXXX XXXX)
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 const aadhaarInput = document.getElementById('su-aadhaar');
 if (aadhaarInput) {
     aadhaarInput.addEventListener('input', function() {
@@ -387,9 +421,9 @@ if (aadhaarInput) {
     });
 }
 
-/* ────────────────────────────────────────────
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
    NOTIFICATION TOAST
-──────────────────────────────────────────── */
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 function showNotification(message, type = 'info') {
     // Remove existing
     document.querySelectorAll('.auth-toast').forEach(t => t.remove());
@@ -435,9 +469,9 @@ function showNotification(message, type = 'info') {
     }, 3500);
 }
 
-/* ────────────────────────────────────────────
-   INIT — check if already logged in
-──────────────────────────────────────────── */
+/* â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+   INIT â€” check if already logged in
+â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */
 document.addEventListener('DOMContentLoaded', () => {
     const session = localStorage.getItem('kisan_session');
     if (session) {
@@ -458,3 +492,5 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+

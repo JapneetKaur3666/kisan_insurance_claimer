@@ -1,778 +1,549 @@
-/* ============================================
-   VOICE RECOGNITION JAVASCRIPT
+﻿/* ============================================
+   VOICE RECOGNITION - Agent-Powered Version
+   Uses API_BASE + getLang() + getVoiceLocale() + applyLanguage() from config.js
    ============================================ */
+(function () {
+    'use strict';
 
-/* INTERVIEW POINT: Immediately Invoked Function Expression (IIFE)
-   Why? Prevents global namespace pollution */
-
-(function() {
-    'use strict'; // INTERVIEW POINT: Strict mode catches common errors
-    
-    console.log('🎤 Voice Recognition Module Loaded');
-    
-    // ============================================
-    // VARIABLE DECLARATIONS
-    // ============================================
-    
-    /* INTERVIEW POINT: const vs let vs var
-       - const: Cannot be reassigned (use for fixed references)
-       - let: Block-scoped, can be reassigned
-       - var: Function-scoped (avoid in modern JS) */
-    
-    const micBtn = document.getElementById('micBtn');
-    const soundWaves = document.getElementById('soundWaves');
-    const statusText = document.getElementById('statusText');
+    /* ── DOM refs ────────────────────────────────────────── */
+    const micBtn          = document.getElementById('micBtn');
+    const soundWaves      = document.getElementById('soundWaves');
+    const statusText      = document.getElementById('statusText');
     const recognizedSection = document.getElementById('recognizedSection');
-    const recognizedText = document.getElementById('recognizedText');
-    const extractedAppNo = document.getElementById('extractedAppNo');
+    const recognizedText  = document.getElementById('recognizedText');
+    const extractedAppNo  = document.getElementById('extractedAppNo');
     const extractedSeason = document.getElementById('extractedSeason');
-    const extractedCrop = document.getElementById('extractedCrop');
-    const confirmBtn = document.getElementById('confirmBtn');
-    const retryBtn = document.getElementById('retryBtn');
-    const editBtn = document.getElementById('editBtn');
-    const voiceLanguage = document.getElementById('voiceLanguage');
-    const compatibilityNotice = document.getElementById('compatibilityNotice');
-    const recentSearches = document.getElementById('recentSearches');
-    const recentSearchesList = document.getElementById('recentSearchesList');
-    const speakBtn = document.getElementById('speakBtn');
-    const autoSpeak = document.getElementById('autoSpeak');
-    
-    /* INTERVIEW POINT: Let for variables that will change */
+    const extractedCrop   = document.getElementById('extractedCrop');
+    const confirmBtn      = document.getElementById('confirmBtn');
+    const retryBtn        = document.getElementById('retryBtn');
+    const editBtn         = document.getElementById('editBtn');
+    const voiceLanguage   = document.getElementById('voiceLanguage');
+    const compatNotice    = document.getElementById('compatibilityNotice');
+    const recentSearches  = document.getElementById('recentSearches');
+    const recentList      = document.getElementById('recentSearchesList');
+    const speakBtn        = document.getElementById('speakBtn');
+    const autoSpeak       = document.getElementById('autoSpeak');
+    const synth           = window.speechSynthesis;
+
+    let isListening = false, transcript = '', isSpeaking = false;
+    let silenceTimer = null;          // fires when farmer stops talking
     let recognition = null;
-    let isListening = false;
-    let transcript = '';
-    let extractedData = {
-        applicationNumber: null,
-        season: null,
-        crop: null
+    let extractedData = { applicationNumber: null, season: null, crop: null };
+
+    /* ── Language helpers (from config.js) ──────────────── */
+    function lang()      { return typeof getLang         === 'function' ? getLang()         : (localStorage.getItem('preferredLanguage') === 'hi' ? 'hi' : 'en'); }
+    function voiceLang() { return typeof getVoiceLocale  === 'function' ? getVoiceLocale()  : (lang() === 'hi' ? 'hi-IN' : 'en-IN'); }
+    function tr(en, hi)  { return lang() === 'hi' ? hi : en; }
+
+    /* ── i18n strings for this page ─────────────────────── */
+    const UI = {
+        tapToStart:   () => tr('Tap the microphone to start', 'माइक दबाएँ और बोलें'),
+        listening:    () => tr('Listening… speak now!', 'सुन रहा हूँ… बोलिए!'),
+        heard:        (t) => tr('Heard: "' + t + '"', 'सुना: "' + t + '"'),
+        stopped:      () => tr('Stopped.', 'रुक गया।'),
+        complete:     () => tr('Got it! ✅', 'समझ गया! ✅'),
+        lowConf:      () => tr('Heard (low confidence) — please confirm', 'सुना (कम विश्वास) — कृपया पुष्टि करें'),
+        noSpeech:     () => tr('No speech detected. Try again.', 'कोई आवाज़ नहीं आई। फिर कोशिश करें।'),
+        noMic:        () => tr('Microphone not found.', 'माइक नहीं मिला।'),
+        denied:       () => tr('Microphone permission denied.', 'माइक की अनुमति नहीं मिली।'),
+        netErr:       () => tr('Network error.', 'नेटवर्क त्रुटि।'),
+        notDetected:  () => tr('Not detected', 'नहीं मिला'),
+        noText:       () => tr('No text to send. Please speak first.', 'कुछ नहीं सुना। पहले बोलें।'),
+        noSpeak:      () => tr('Nothing to speak yet.', 'अभी कुछ नहीं है।'),
+        connecting:   () => tr('Checking status…', 'स्थिति देख रहे हैं…'),
+        appFound:     () => tr('Application number found. Tap Confirm.', 'आवेदन नंबर मिला। पुष्टि बटन दबाएँ।'),
+        appNotFound:  () => tr('Could not find the application number. Please edit or re-speak.', 'आवेदन नंबर नहीं मिला। कृपया संपादित करें या दोबारा बोलें।'),
+        editPrompt:   () => tr('Edit recognized text below, then tap the microphone to re-speak or press Confirm.', 'नीचे पहचाना गया टेक्स्ट सुधारें, फिर माइक दबाएँ या पुष्टि करें।'),
+        langChanged:  () => tr('Language set to English', 'भाषा हिंदी में बदल दी'),
     };
-    let isSpeaking = false;
-    
-    // ============================================
-    // TEXT-TO-SPEECH (SPEECH SYNTHESIS) SETUP
-    // ============================================
-    
-    /* INTERVIEW POINT: Web Speech API has two parts:
-       1. SpeechRecognition (speech-to-text) - Already implemented
-       2. SpeechSynthesis (text-to-speech) - Adding now */
-    
-    const synth = window.speechSynthesis;
-    
-    // Check if speech synthesis is supported
-    if ('speechSynthesis' in window) {
-        console.log('✅ Speech Synthesis API supported');
-    } else {
-        console.warn('❌ Speech Synthesis API not supported');
-    }
-    
-    /* INTERVIEW POINT: Function to speak text in selected language */
-    function speakText(text, lang = 'en-IN') {
-        // Stop any ongoing speech
-        if (synth.speaking) {
-            synth.cancel();
-        }
-        
-        // Create speech utterance
-        const utterance = new SpeechSynthesisUtterance(text);
-        
-        // Set language (map recognition language to synthesis language)
-        utterance.lang = lang;
-        
-        // Set voice properties
-        utterance.rate = 0.9;  // Slightly slower for clarity
-        utterance.pitch = 1.0; // Normal pitch
-        utterance.volume = 1.0; // Full volume
-        
-        // Event listeners for utterance
-        utterance.onstart = function() {
-            console.log('🔊 Speaking:', text);
+
+    /* ── TTS ─────────────────────────────────────────────── */
+    function speakText(text, l) {
+        l = l || voiceLang();
+        if (!('speechSynthesis' in window) || !text) return;
+        if (synth.speaking) synth.cancel();
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = l; u.rate = 0.88; u.pitch = 1.0; u.volume = 1.0;
+        u.onstart = () => {
             isSpeaking = true;
-            if (speakBtn) {
-                speakBtn.classList.add('speaking');
-                speakBtn.innerHTML = '<i class="fas fa-volume-up"></i> Speaking...';
-            }
+            if (speakBtn) { speakBtn.classList.add('speaking'); speakBtn.innerHTML = '<i class="fas fa-volume-up"></i> ' + tr('Speaking…', 'बोल रहा हूँ…'); }
         };
-        
-        utterance.onend = function() {
-            console.log('✅ Finished speaking');
+        u.onend = () => {
             isSpeaking = false;
-            if (speakBtn) {
-                speakBtn.classList.remove('speaking');
-                speakBtn.innerHTML = '<i class="fas fa-volume-up"></i> Hear What We Understood';
-            }
+            if (speakBtn) { speakBtn.classList.remove('speaking'); speakBtn.innerHTML = '<i class="fas fa-volume-up"></i> ' + tr('Hear What We Understood', 'सुनें क्या समझा'); }
         };
-        
-        utterance.onerror = function(event) {
-            console.error('❌ Speech synthesis error:', event.error);
-            isSpeaking = false;
-            if (speakBtn) {
-                speakBtn.classList.remove('speaking');
-            }
-        };
-        
-        // Speak the text
-        synth.speak(utterance);
+        synth.speak(u);
     }
-    
-    /* INTERVIEW POINT: Get translated phrases for different languages */
-    function getLocalizedPhrase(key, lang, data = {}) {
-        const phrases = {
-            'en-IN': {
-                recognized: `We heard: ${data.text}`,
-                extracted: `Application number ${data.appNo}, ${data.season} season, ${data.crop} crop.`,
-                missing: 'Some information could not be extracted. Please edit the text.',
-                confidence: `Recognition confidence is ${data.confidence} percent.`
-            },
-            'hi-IN': {
-                recognized: `हमने सुना: ${data.text}`,
-                extracted: `आवेदन संख्या ${data.appNo}, ${data.season} मौसम, ${data.crop} फसल।`,
-                missing: 'कुछ जानकारी निकाली नहीं जा सकी। कृपया पाठ संपादित करें।',
-                confidence: `पहचान विश्वास ${data.confidence} प्रतिशत है।`
-            },
-            'mr-IN': {
-                recognized: `आम्ही ऐकले: ${data.text}`,
-                extracted: `अर्ज क्रमांक ${data.appNo}, ${data.season} हंगाम, ${data.crop} पीक।`,
-                missing: 'काही माहिती काढली जाऊ शकली नाही। कृपया मजकूर संपादित करा।',
-                confidence: `ओळख विश्वास ${data.confidence} टक्के आहे।`
-            },
-            // Add more languages as needed
-        };
-        
-        return phrases[lang]?.[key] || phrases['en-IN'][key];
-    }
-    
-    // ============================================
-    // WEB SPEECH API SETUP
-    // ============================================
-    
-    /* INTERVIEW POINT: Feature Detection (not browser detection)
-       Why? More reliable, future-proof, graceful degradation */
-    
-    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-    
-    if (typeof SpeechRecognition !== 'undefined') {
-        console.log('✅ Speech Recognition API supported');
-        initializeSpeechRecognition();
-    } else {
-        console.warn('❌ Speech Recognition API not supported');
-        showCompatibilityWarning();
-    }
-    
-    /* INTERVIEW POINT: Function Declaration vs Expression
-       This is a function declaration - hoisted to top */
-    function initializeSpeechRecognition() {
-        // INTERVIEW POINT: Creating new instance of SpeechRecognition
-        recognition = new SpeechRecognition();
-        
-        /* INTERVIEW POINT: Configuring recognition properties */
-        recognition.continuous = false;      // Stop after one result
-        recognition.interimResults = true;   // Get partial results
-        recognition.maxAlternatives = 1;     // Number of alternative transcripts
-        
-        // Set language from dropdown (default: English-India)
-        recognition.lang = voiceLanguage.value || 'en-IN';
-        
-        // INTERVIEW POINT: Event Listeners for Speech Recognition
-        setupRecognitionEvents();
-    }
-    
-    // ============================================
-    // SPEECH RECOGNITION EVENT HANDLERS
-    // ============================================
-    
-    function setupRecognitionEvents() {
-        
-        /* INTERVIEW POINT: onstart - Triggered when recognition begins */
-        recognition.onstart = function() {
-            console.log('🎤 Recognition started');
+
+    /* ── Speech Recognition — continuous with silence timer ── */
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (SR) {
+        recognition = new SR();
+        recognition.continuous    = true;   // keep listening until farmer pauses
+        recognition.interimResults = true;
+        recognition.maxAlternatives = 1;
+        recognition.lang = voiceLang();
+
+        recognition.onstart = () => {
             isListening = true;
-            updateUI('listening');
-            statusText.textContent = 'Listening... Speak now!';
-            micBtn.setAttribute('data-listening', 'true');
-            soundWaves.style.display = 'flex';
+            if (statusText) statusText.textContent = UI.listening();
+            if (micBtn) micBtn.setAttribute('data-listening', 'true');
+            if (soundWaves) soundWaves.style.display = 'flex';
+            clearTimeout(silenceTimer);
         };
-        
-        /* INTERVIEW POINT: onresult - Most important event
-           Receives speech recognition results */
-        recognition.onresult = function(event) {
-            console.log('📝 Recognition result received', event);
-            
-            /* INTERVIEW POINT: Accessing event results
-               event.results is a SpeechRecognitionResultList */
-            const last = event.results.length - 1;
-            const result = event.results[last];
-            transcript = result[0].transcript;
-            
-            /* INTERVIEW POINT: Confidence score (0 to 1)
-               Higher = more confident in accuracy */
-            const confidence = result[0].confidence;
-            
-            console.log(`Transcript: "${transcript}" (confidence: ${(confidence * 100).toFixed(0)}%)`);
-            
-            // Update UI with interim results
-            statusText.textContent = `Heard: "${transcript}"`;
-            
-            // Show confidence bar
-            updateConfidenceBar(confidence);
-            
-            /* INTERVIEW POINT: isFinal property
-               True when recognition is complete */
-            if (result.isFinal) {
-                processFinalTranscript(transcript, confidence);
-            }
+
+        recognition.onresult = (e) => {
+            // Collect ALL results (interim + final)
+            let full = '';
+            for (let i = 0; i < e.results.length; i++) full += e.results[i][0].transcript;
+            transcript = full.trim();
+            const conf = e.results[e.results.length - 1][0].confidence;
+
+            if (statusText) statusText.textContent = UI.heard(transcript);
+            updateConfidenceBar(conf);
+
+            // Reset silence timer: stop recognition 2.5 s after farmer stops talking
+            clearTimeout(silenceTimer);
+            silenceTimer = setTimeout(() => {
+                if (isListening) recognition.stop();
+            }, 2500);
         };
-        
-        /* INTERVIEW POINT: onerror - Error handling */
-        recognition.onerror = function(event) {
-            console.error('❌ Recognition error:', event.error);
-            
-            /* INTERVIEW POINT: Switch statement for error types */
-            switch (event.error) {
-                case 'no-speech':
-                    statusText.textContent = 'No speech detected. Please try again.';
-                    break;
-                case 'audio-capture':
-                    statusText.textContent = 'Microphone not found. Check permissions.';
-                    break;
-                case 'not-allowed':
-                    statusText.textContent = 'Microphone permission denied.';
-                    break;
-                case 'network':
-                    statusText.textContent = 'Network error. Check internet connection.';
-                    break;
-                default:
-                    statusText.textContent = `Error: ${event.error}`;
-            }
-            
+
+        recognition.onerror = (e) => {
+            const msgs = { 'no-speech': UI.noSpeech(), 'audio-capture': UI.noMic(), 'not-allowed': UI.denied(), 'network': UI.netErr() };
+            if (statusText) statusText.textContent = msgs[e.error] || ('Error: ' + e.error);
             resetUI();
         };
-        
-        /* INTERVIEW POINT: onend - Recognition stopped */
-        recognition.onend = function() {
-            console.log('⏹️ Recognition ended');
+
+        recognition.onend = () => {
+            clearTimeout(silenceTimer);
             isListening = false;
-            micBtn.setAttribute('data-listening', 'false');
-            soundWaves.style.display = 'none';
+            if (micBtn) micBtn.setAttribute('data-listening', 'false');
+            if (soundWaves) soundWaves.style.display = 'none';
+            if (transcript && transcript.length > 1) {
+                const conf = 0.8; // confidence not available from onend
+                processFinalTranscript(transcript, conf);
+            } else {
+                if (statusText) statusText.textContent = UI.tapToStart();
+            }
         };
+    } else {
+        if (compatNotice) compatNotice.style.display = 'block';
     }
-    
-    // ============================================
-    // MICROPHONE BUTTON HANDLER
-    // ============================================
-    
-    /* INTERVIEW POINT: Event listener for button click */
-    if (micBtn) {
-        micBtn.addEventListener('click', function() {
-            
-            if (!recognition) {
-                alert('Speech recognition not available in this browser.');
-                return;
-            }
-            
-            /* INTERVIEW POINT: Toggle behavior - start/stop */
-            if (isListening) {
-                // Stop listening
-                recognition.stop();
-                statusText.textContent = 'Stopped listening';
-                resetUI();
-            } else {
-                // Start listening
-                try {
-                    // Update language before starting
-                    recognition.lang = voiceLanguage.value;
-                    recognition.start();
-                } catch (error) {
-                    console.error('Error starting recognition:', error);
-                    statusText.textContent = 'Error starting microphone. Try again.';
-                }
-            }
-        });
-    }
-    
-    // ============================================
-    // LANGUAGE CHANGE HANDLER
-    // ============================================
-    
-    /* INTERVIEW POINT: Change event for dropdown */
-    if (voiceLanguage) {
-        voiceLanguage.addEventListener('change', function() {
-            console.log('Language changed to:', this.value);
-            
-            // Update recognition language if active
-            if (recognition && !isListening) {
-                recognition.lang = this.value;
-            }
-            
-            // Show notification
-            showNotification(`Voice language set to: ${this.options[this.selectedIndex].text}`, 'success');
-        });
-    }
-    
-    // ============================================
-    // NATURAL LANGUAGE PROCESSING (NLP)
-    // ============================================
-    
-    /* INTERVIEW POINT: Text processing and pattern matching
-       Using Regular Expressions (RegEx) */
-    
-    function processFinalTranscript(text, confidence) {
-        console.log('Processing transcript:', text);
-        
-        // Display recognized text
-        recognizedText.textContent = text;
-        recognizedSection.style.display = 'block';
-        
-        // Extract information using NLP
-        extractedData = extractInformation(text);
-        
-        // Update UI with extracted data
-        updateExtractedInfo(extractedData);
-        
-        // Save to recent searches
-        saveToRecentSearches(text, extractedData);
-        
-        // Show recent searches
-        displayRecentSearches();
-        
-        statusText.textContent = confidence > 0.7 
-            ? 'Recognition complete! ✅' 
-            : 'Recognition complete (low confidence)';
-        
-        // INTERVIEW POINT: Auto-speak if enabled
-        if (autoSpeak && autoSpeak.checked) {
-            const currentLang = voiceLanguage.value;
-            
-            // Create summary to speak
-            let summary = '';
-            
-            if (extractedData.applicationNumber && extractedData.season && extractedData.crop) {
-                // All data extracted successfully
-                summary = getLocalizedPhrase('extracted', currentLang, {
-                    appNo: extractedData.applicationNumber,
-                    season: extractedData.season,
-                    crop: extractedData.crop
-                });
-            } else {
-                // Some data missing
-                summary = getLocalizedPhrase('missing', currentLang);
-            }
-            
-            // Speak after a brief delay
-            setTimeout(() => {
-                speakText(summary, currentLang);
-            }, 500);
-        }
-    }
-    
-    /* INTERVIEW POINT: Regular Expressions for pattern matching */
-    function extractInformation(text) {
-        const data = {
-            applicationNumber: null,
-            season: null,
-            crop: null
-        };
-        
-        // INTERVIEW POINT: RegEx to extract numbers
-        // Match 4-6 digit numbers
-        const numberPattern = /\b(\d{4,6})\b/;
-        const numberMatch = text.match(numberPattern);
-        if (numberMatch) {
-            data.applicationNumber = numberMatch[1];
-        }
-        
-        // INTERVIEW POINT: Case-insensitive matching with /i flag
-        // Extract season (Kharif, Rabi)
-        const seasonPattern = /\b(kharif|rabi|summer|zaid)\b/i;
-        const seasonMatch = text.match(seasonPattern);
-        if (seasonMatch) {
-            data.season = seasonMatch[1].charAt(0).toUpperCase() + seasonMatch[1].slice(1);
-        }
-        
-        // Extract crop type
-        const cropPattern = /\b(rice|wheat|cotton|maize|sugarcane|pulses|soybean|groundnut|bajra|jowar)\b/i;
-        const cropMatch = text.match(cropPattern);
-        if (cropMatch) {
-            data.crop = cropMatch[1].charAt(0).toUpperCase() + cropMatch[1].slice(1);
-        }
-        
-        console.log('Extracted data:', data);
-        return data;
-    }
-    
-    function updateExtractedInfo(data) {
-        extractedAppNo.textContent = data.applicationNumber || 'Not detected';
-        extractedSeason.textContent = data.season || 'Not detected';
-        extractedCrop.textContent = data.crop || 'Not detected';
-        
-        // INTERVIEW POINT: Conditional styling based on data
-        [extractedAppNo, extractedSeason, extractedCrop].forEach(element => {
-            if (element.textContent === 'Not detected') {
-                element.style.color = 'var(--error)';
-            } else {
-                element.style.color = 'var(--primary-green)';
-            }
-        });
-    }
-    
-    // ============================================
-    // CONFIDENCE BAR UPDATE
-    // ============================================
-    
-    function updateConfidenceBar(confidence) {
-        const confidenceBar = document.getElementById('confidenceBar');
-        const confidenceFill = confidenceBar.querySelector('.confidence-fill');
-        
-        confidenceBar.style.display = 'block';
-        
-        // INTERVIEW POINT: Template literals for dynamic values
-        confidenceFill.style.width = `${confidence * 100}%`;
-        
-        // Color based on confidence level
-        if (confidence > 0.8) {
-            confidenceFill.style.background = '#4CAF50'; // Green
-        } else if (confidence > 0.6) {
-            confidenceFill.style.background = '#FFC107'; // Yellow
+
+    /* ── Mic button ──────────────────────────────────────── */
+    if (micBtn) micBtn.addEventListener('click', function () {
+        if (!recognition) { alert(tr('Speech recognition not available.', 'स्पीच रिकग्निशन उपलब्ध नहीं है।')); return; }
+        if (isListening) {
+            clearTimeout(silenceTimer);
+            recognition.stop();
+            if (statusText) statusText.textContent = UI.stopped();
+            resetUI();
         } else {
-            confidenceFill.style.background = '#FF5722'; // Red
-        }
-    }
-    
-    // ============================================
-    // BUTTON HANDLERS
-    // ============================================
-    
-    /* INTERVIEW POINT: Confirm button - calls API then navigates */
-    if (confirmBtn) {
-        confirmBtn.addEventListener('click', async function() {
-            
-            if (!extractedData.applicationNumber) {
-                showNotification('Application number is required!', 'warning');
-                return;
-            }
-            
-            // Save data for dashboard fallback
-            localStorage.setItem('searchQuery', JSON.stringify({
-                applicationNumber: extractedData.applicationNumber,
-                season: extractedData.season,
-                crop: extractedData.crop,
-                timestamp: new Date().toISOString()
-            }));
-
-            // Disable button while checking
-            confirmBtn.disabled = true;
-            confirmBtn.textContent = 'Checking...';
-
-            try {
-                const res = await fetch(`http://localhost:8001/api/claims/${extractedData.applicationNumber}`);
-
-                if (res.ok) {
-                    showNotification('Claim found! Loading dashboard...', 'success');
-                    setTimeout(() => {
-                        window.location.href = `dashboard.html?app=${extractedData.applicationNumber}`;
-                    }, 800);
-                } else if (res.status === 404) {
-                    showNotification(`No claim found for application number ${extractedData.applicationNumber}. Please try again.`, 'error');
-                    confirmBtn.disabled = false;
-                    confirmBtn.textContent = 'Check Status';
-                } else {
-                    // Proceed anyway on server errors
-                    window.location.href = `dashboard.html?app=${extractedData.applicationNumber}`;
-                }
-            } catch (err) {
-                // Backend not reachable — graceful fallback
-                console.warn('Backend unreachable:', err);
-                showNotification('Loading dashboard...', 'info');
-                setTimeout(() => {
-                    window.location.href = `dashboard.html?app=${extractedData.applicationNumber}`;
-                }, 800);
-            }
-        });
-    }
-    
-    /* INTERVIEW POINT: Retry button - reset and try again */
-    if (retryBtn) {
-        retryBtn.addEventListener('click', function() {
-            recognizedSection.style.display = 'none';
             transcript = '';
-            extractedData = {
-                applicationNumber: null,
-                season: null,
-                crop: null
-            };
-            statusText.textContent = 'Tap the microphone to start';
-            
-            // Auto-start recognition
-            if (recognition) {
-                setTimeout(() => {
-                    recognition.start();
-                }, 500);
+            try {
+                recognition.lang = voiceLang();
+                recognition.start();
+            } catch (e) {
+                if (statusText) statusText.textContent = tr('Error starting mic. Try again.', 'माइक शुरू नहीं हुआ। फिर कोशिश करें।');
             }
-        });
-    }
-    
-    /* INTERVIEW POINT: Edit button - allow manual correction */
-    if (editBtn) {
-        editBtn.addEventListener('click', function() {
-            /* INTERVIEW POINT: prompt() for simple user input
-               In production, use custom modal */
-            const edited = prompt('Edit the recognized text:', recognizedText.textContent);
-            
-            if (edited && edited.trim()) {
-                recognizedText.textContent = edited;
-                extractedData = extractInformation(edited);
-                updateExtractedInfo(extractedData);
-            }
-        });
-    }
-    
-    // ============================================
-    // SPEAK BUTTON HANDLER
-    // ============================================
-    
-    /* INTERVIEW POINT: Text-to-Speech on button click */
-    if (speakBtn) {
-        speakBtn.addEventListener('click', function() {
-            const textToSpeak = recognizedText.textContent;
-            const currentLang = voiceLanguage.value;
-            
-            if (!textToSpeak) {
-                showNotification('⚠️ No text to speak', 'warning');
-                return;
-            }
-            
-            // If already speaking, stop
-            if (isSpeaking) {
-                synth.cancel();
-                return;
-            }
-            
-            // Create detailed summary
-            let summary = getLocalizedPhrase('recognized', currentLang, {
-                text: textToSpeak
-            });
-            
-            // Add extracted information
-            if (extractedData.applicationNumber || extractedData.season || extractedData.crop) {
-                summary += ' ' + getLocalizedPhrase('extracted', currentLang, {
-                    appNo: extractedData.applicationNumber || 'not detected',
-                    season: extractedData.season || 'not detected',
-                    crop: extractedData.crop || 'not detected'
-                });
-            }
-            
-            speakText(summary, currentLang);
-        });
-    }
-    
-    // ============================================
-    // AUTO-SPEAK TOGGLE
-    // ============================================
-    
-    /* INTERVIEW POINT: Save auto-speak preference */
-    if (autoSpeak) {
-        // Load saved preference
-        const savedAutoSpeak = localStorage.getItem('autoSpeak');
-        if (savedAutoSpeak !== null) {
-            autoSpeak.checked = savedAutoSpeak === 'true';
-        }
-        
-        // Save on change
-        autoSpeak.addEventListener('change', function() {
-            localStorage.setItem('autoSpeak', this.checked);
-            const status = this.checked ? 'enabled' : 'disabled';
-            showNotification(`🔊 Auto-speak ${status}`, 'success');
-        });
-    }
-    
-    // ============================================
-    // LOCAL STORAGE - RECENT SEARCHES
-    // ============================================
-    
-    /* INTERVIEW POINT: LocalStorage for persistent data
-       Stores data across browser sessions */
-    
-    function saveToRecentSearches(text, data) {
-        // INTERVIEW POINT: Try-catch for error handling
-        try {
-            // Get existing searches
-            let searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
-            
-            // Add new search
-            searches.unshift({
-                text: text,
-                data: data,
-                timestamp: new Date().toISOString()
-            });
-            
-            // Keep only last 5 searches
-            searches = searches.slice(0, 5);
-            
-            // Save back to localStorage
-            localStorage.setItem('recentSearches', JSON.stringify(searches));
-            
-            console.log('Saved to recent searches');
-        } catch (error) {
-            console.error('Error saving to localStorage:', error);
-        }
-    }
-    
-    function displayRecentSearches() {
-        try {
-            const searches = JSON.parse(localStorage.getItem('recentSearches') || '[]');
-            
-            if (searches.length === 0) {
-                recentSearches.style.display = 'none';
-                return;
-            }
-            
-            recentSearches.style.display = 'block';
-            recentSearchesList.innerHTML = '';
-            
-            /* INTERVIEW POINT: Array.forEach() for iteration */
-            searches.forEach((search, index) => {
-                /* INTERVIEW POINT: Creating DOM elements dynamically */
-                const item = document.createElement('div');
-                item.className = 'recent-item';
-                
-                /* INTERVIEW POINT: Template literals with embedded expressions */
-                item.innerHTML = `
-                    <div>
-                        <strong>${search.data.applicationNumber || 'N/A'}</strong>
-                        <span> - ${search.text.substring(0, 50)}...</span>
-                    </div>
-                    <small>${formatTimestamp(search.timestamp)}</small>
-                `;
-                
-                // Click to reuse
-                item.addEventListener('click', function() {
-                    recognizedText.textContent = search.text;
-                    extractedData = search.data;
-                    updateExtractedInfo(extractedData);
-                    recognizedSection.style.display = 'block';
-                });
-                
-                recentSearchesList.appendChild(item);
-            });
-        } catch (error) {
-            console.error('Error displaying recent searches:', error);
-        }
-    }
-    
-    /* INTERVIEW POINT: Date formatting */
-    function formatTimestamp(isoString) {
-        const date = new Date(isoString);
-        const now = new Date();
-        const diffMs = now - date;
-        const diffMins = Math.floor(diffMs / 60000);
-        
-        if (diffMins < 1) return 'Just now';
-        if (diffMins < 60) return `${diffMins} min ago`;
-        if (diffMins < 1440) return `${Math.floor(diffMins / 60)} hours ago`;
-        return date.toLocaleDateString();
-    }
-    
-    // ============================================
-    // UI HELPER FUNCTIONS
-    // ============================================
-    
-    function updateUI(state) {
-        // Add visual feedback based on state
-        switch (state) {
-            case 'listening':
-                micBtn.classList.add('active');
-                break;
-            case 'processing':
-                statusText.textContent = 'Processing...';
-                break;
-            case 'complete':
-                statusText.textContent = 'Complete!';
-                break;
-        }
-    }
-    
-    function resetUI() {
-        micBtn.setAttribute('data-listening', 'false');
-        soundWaves.style.display = 'none';
-        isListening = false;
-    }
-    
-    function showCompatibilityWarning() {
-        if (compatibilityNotice) {
-            compatibilityNotice.style.display = 'block';
-        }
-    }
-    
-    /* INTERVIEW POINT: Reusable notification function */
-    function showNotification(message, type = 'info') {
-        const notification = document.createElement('div');
-        notification.className = `notification notification-${type}`;
-        notification.textContent = message;
-        
-        Object.assign(notification.style, {
-            position: 'fixed',
-            top: '20px',
-            right: '20px',
-            padding: '1rem 1.5rem',
-            borderRadius: '12px',
-            color: '#fff',
-            fontSize: '1rem',
-            fontWeight: '500',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-            zIndex: '10000',
-            maxWidth: '400px',
-            animation: 'slideInRight 0.4s ease'
-        });
-        
-        const colors = {
-            success: '#4CAF50',
-            error: '#D32F2F',
-            warning: '#FFC107',
-            info: '#2196F3'
-        };
-        notification.style.backgroundColor = colors[type] || colors.info;
-        
-        document.body.appendChild(notification);
-        
-        setTimeout(() => {
-            notification.style.animation = 'slideOutRight 0.4s ease';
-            setTimeout(() => notification.remove(), 400);
-        }, 3000);
-    }
-    
-    // ============================================
-    // INITIALIZATION
-    // ============================================
-    
-    /* INTERVIEW POINT: DOMContentLoaded ensures DOM is ready */
-    document.addEventListener('DOMContentLoaded', function() {
-        console.log('✅ Voice input page initialized');
-        
-        // Display recent searches on load
-        displayRecentSearches();
-        
-        // Load saved language preference
-        const savedLanguage = localStorage.getItem('preferredLanguage');
-        if (savedLanguage && voiceLanguage) {
-            // Map UI language to voice recognition language
-            const langMap = {
-                'en': 'en-IN',
-                'hi': 'hi-IN',
-                'mr': 'mr-IN',
-                'pa': 'pa-IN',
-                'gu': 'gu-IN',
-                'ta': 'ta-IN'
-            };
-            voiceLanguage.value = langMap[savedLanguage] || 'en-IN';
         }
     });
-    
-    /* INTERVIEW POINT: Export functions for testing (optional)
-       In real projects, you might use modules */
-    // window.VoiceRecognition = {
-    //     extractInformation,
-    //     processFinalTranscript
-    // };
-    
-})(); // End of IIFE
 
-console.log('🎤 Voice Recognition Module Ready');
+    /* Voice language selector → sync & restart if needed */
+    if (voiceLanguage) voiceLanguage.addEventListener('change', function () {
+        if (recognition && !isListening) recognition.lang = this.value;
+        localStorage.setItem('preferredLanguage', this.value.split('-')[0]);
+        if (typeof applyLanguage === 'function') applyLanguage();
+    });
+
+    /* ── Process what was said ───────────────────────────── */
+    function processFinalTranscript(text, confidence) {
+        if (recognizedText) recognizedText.textContent = text;
+        if (recognizedSection) recognizedSection.style.display = 'block';
+        extractedData = extractInformation(text);
+        updateExtractedInfo(extractedData);
+        saveToRecentSearches(text, extractedData);
+        displayRecentSearches();
+
+        if (statusText) statusText.textContent = confidence > 0.7 ? UI.complete() : UI.lowConf();
+
+        if (autoSpeak && autoSpeak.checked) {
+            const msg = extractedData.applicationNumber ? UI.appFound() : UI.appNotFound();
+            setTimeout(() => speakText(msg, voiceLang()), 500);
+        }
+    }
+
+    /* ── Entity extraction ───────────────────────────────── */
+
+    /**
+     * Step 1: Normalize the raw speech-to-text string so downstream regexes work.
+     * Handles:
+     *  - Devanagari digits → ASCII (०→0 … ९→9)
+     *  - "के आर बी" / "केआरबी" / "k r b" → "KRB"
+     *  - Strip non-digit garbage fused onto numbers ("00417ग्राफ" → "00417")
+     */
+    function normalizeText(raw) {
+        if (!raw) return '';
+        const deva = {'०':'0','१':'1','२':'2','३':'3','४':'4','५':'5','६':'6','७':'7','८':'8','९':'9'};
+        let t = raw.replace(/[०-९]/g, function(d) { return deva[d] || d; });
+        // Hindi "के आर बी" → KRB
+        t = t.replace(/के\s*[\.\-]?\s*आर\s*[\.\-]?\s*बी/gi, 'KRB');
+        t = t.replace(/\bk\s+r\s+b\b/gi, 'KRB');
+        // Strip non-alphanumeric characters fused to the end of a 5-digit number
+        // e.g. "00417ग्राफ" → "00417"
+        t = t.replace(/(\d{5})[\u0900-\u097F\u0A00-\u0A7F]+/g, '$1');
+        return t;
+    }
+
+    /**
+     * Step 2: Extract application number, season, crop from normalized text.
+     * NOTE: The display boxes are just visual feedback — the full raw transcript
+     * is always sent to the backend agent which uses the Python NLU for accurate extraction.
+     */
+    function extractInformation(rawText) {
+        const data = { applicationNumber: null, season: null, crop: null };
+        const text = normalizeText(rawText || '');
+
+        /* ── Application number ──────────────────────────── */
+        // Full KRB format: KRB-2026-00417, KRB 2026 00417
+        let krbMatch = text.match(/KRB[-\s]?(\d{4})[-\s]?(\d{5})/i);
+        if (krbMatch) {
+            data.applicationNumber = 'KRB-' + krbMatch[1] + '-' + krbMatch[2];
+        } else {
+            // 9 digits starting with 20xx: 202600417 → KRB-2026-00417
+            let nineMatch = text.match(/\b(20\d{2})\s*[-]?\s*(\d{5})\b/);
+            if (nineMatch) {
+                data.applicationNumber = 'KRB-' + nineMatch[1] + '-' + nineMatch[2];
+            } else {
+                // Exactly 5 digits alone → KRB-2026-NNNNN
+                let fiveMatch = text.match(/(?<![0-9])(\d{5})(?![0-9])/);
+                if (fiveMatch) {
+                    data.applicationNumber = 'KRB-2026-' + fiveMatch[1];
+                }
+            }
+        }
+
+        /* ── Season ──────────────────────────────────────── */
+        // All spoken/written variants including Hinglish transliterations
+        var seasonMap = [
+            { re: /\b(kharif|kharip|kharib|खरीफ|ख़रीफ़|खारिफ|खरिफ|खारिफ़|खरीप)\b/i, val: 'Kharif' },
+            { re: /\b(rabi|rabbi|rabi|रबी|रब्बी|रबि|रबी)\b/i,                         val: 'Rabi' },
+            { re: /\b(zaid|zayad|jayad|जायद|ज़ायद|जायद|जाइद)\b/i,                     val: 'Zaid' },
+        ];
+        for (var si = 0; si < seasonMap.length; si++) {
+            if (seasonMap[si].re.test(text)) { data.season = seasonMap[si].val; break; }
+        }
+
+        /* ── Crop ────────────────────────────────────────── */
+        // All spoken/written/Hinglish variants
+        var cropMap = [
+            { re: /\b(paddy|rice|dhan|dhaan|धान|चावल|पैडी|राइस)\b/i,                          val: 'Paddy' },
+            { re: /\b(wheat|gehu|gehun|gehoon|गेहूं|गेहूँ|गेहु|व्हीट|वीट|गेहूं|गेहू)\b/i,    val: 'Wheat' },
+            { re: /\b(cotton|kapas|कपास|कॉटन)\b/i,                                              val: 'Cotton' },
+            { re: /\b(sugarcane|sugar\s*cane|ganna|गन्ना|गन्ने|सुगरकेन)\b/i,                   val: 'Sugarcane' },
+            { re: /\b(maize|corn|makka|मक्का|मक्के|मेज़|मक्का)\b/i,                            val: 'Maize' },
+            { re: /\b(mustard|sarson|सरसों|सरसो|मस्टर्ड)\b/i,                                  val: 'Mustard' },
+            { re: /\b(soybean|soyabean|soya|सोयाबीन|सोया)\b/i,                                  val: 'Soybean' },
+            { re: /\b(bajra|bajri|बाजरा|बाजरे)\b/i,                                             val: 'Bajra' },
+            { re: /\b(gram|chana|chanaa|चना|चने|चनो)\b/i,                                       val: 'Gram' },
+            { re: /\b(groundnut|peanut|mungfali|मूंगफली|मूँगफली)\b/i,                          val: 'Groundnut' },
+        ];
+        for (var ci = 0; ci < cropMap.length; ci++) {
+            if (cropMap[ci].re.test(text)) { data.crop = cropMap[ci].val; break; }
+        }
+
+        return data;
+    }
+
+    function updateExtractedInfo(data) {
+        const nd = UI.notDetected();
+        if (extractedAppNo) { extractedAppNo.textContent = data.applicationNumber || nd; extractedAppNo.style.color = data.applicationNumber ? 'var(--primary-green)' : 'var(--error)'; }
+        if (extractedSeason) { extractedSeason.textContent = data.season || nd; extractedSeason.style.color = data.season ? 'var(--primary-green)' : 'var(--error)'; }
+        if (extractedCrop) { extractedCrop.textContent = data.crop || nd; extractedCrop.style.color = data.crop ? 'var(--primary-green)' : 'var(--error)'; }
+    }
+
+    function updateConfidenceBar(confidence) {
+        const bar = document.getElementById('confidenceBar'), fill = bar && bar.querySelector('.confidence-fill');
+        if (!bar || !fill) return;
+        bar.style.display = 'block';
+        fill.style.width = (confidence * 100) + '%';
+        fill.style.background = confidence > 0.8 ? '#4CAF50' : confidence > 0.6 ? '#FFC107' : '#FF5722';
+    }
+
+    /* ── Confirm button ──────────────────────────────────── */
+    let agentSessionId = localStorage.getItem('kisan_session_id') || null;
+    async function initAgentSession() {
+        try {
+            const l = lang();
+            const r = await fetch(API_BASE + '/api/session', { method: 'POST', headers: API_CONFIG.headers(), body: JSON.stringify({ lang: l }) });
+            const d = await r.json();
+            agentSessionId = d.session_id;
+            localStorage.setItem('kisan_session_id', agentSessionId);
+        } catch (e) { console.warn('Could not create agent session:', e); }
+    }
+
+    if (confirmBtn) confirmBtn.addEventListener('click', async function () {
+        // Use the inline edit input value if the edit panel is open, else recognizedText
+        const editInput = document.getElementById('editInput');
+        const text = (editInput && editInput.style.display !== 'none' && editInput.value.trim())
+            ? editInput.value.trim()
+            : (recognizedText ? recognizedText.textContent.trim() : '');
+
+        if (!text) { showNotification(UI.noText(), 'warning'); return; }
+        confirmBtn.disabled = true;
+        confirmBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> ' + UI.connecting();
+        if (!agentSessionId) await initAgentSession();
+        const l = lang();
+        try {
+            const resp = await fetch(API_BASE + '/api/chat', {
+                method: 'POST', headers: API_CONFIG.headers(),
+                body: JSON.stringify({ session_id: agentSessionId, text, lang: l })
+            });
+            const data = await resp.json();
+            showAgentReply(data.reply || '');
+            if (data.reply) speakText(data.reply, voiceLang());
+            // close edit panel after sending
+            hideEditPanel();
+            let appNo = null;
+            if (data.claim && data.claim.app_no) appNo = data.claim.app_no;
+            else if (data.entities && data.entities.app_no) appNo = data.entities.app_no;
+            else if (extractedData.applicationNumber) appNo = extractedData.applicationNumber;
+            if (appNo && data.state !== 'COLLECT') {
+                localStorage.setItem('searchQuery', JSON.stringify({ applicationNumber: appNo, timestamp: new Date().toISOString() }));
+                setTimeout(() => window.location.href = 'dashboard.html?app=' + encodeURIComponent(appNo) + '&sid=' + encodeURIComponent(agentSessionId), 1800);
+            } else {
+                confirmBtn.disabled = false;
+                confirmBtn.innerHTML = '<i class="fas fa-check"></i> ' + tr('Confirm & Check Status', 'पुष्टि करें');
+            }
+        } catch (e) {
+            if (extractedData.applicationNumber) {
+                showNotification(tr('Connecting to dashboard…', 'डैशबोर्ड खोल रहे हैं…'), 'info');
+                setTimeout(() => window.location.href = 'dashboard.html?app=' + extractedData.applicationNumber, 800);
+            } else {
+                showNotification(tr('Could not connect. Try again.', 'कनेक्ट नहीं हो पाया। फिर कोशिश करें।'), 'error');
+                confirmBtn.disabled = false;
+                confirmBtn.innerHTML = '<i class="fas fa-check"></i> ' + tr('Confirm & Check Status', 'पुष्टि करें');
+            }
+        }
+    });
+
+    /* ── Edit button — inline panel with mic ─────────────── */
+    function showEditPanel() {
+        let panel = document.getElementById('editPanel');
+        if (!panel) {
+            panel = document.createElement('div');
+            panel.id = 'editPanel';
+            panel.className = 'edit-panel';
+            panel.innerHTML =
+                '<p class="edit-hint"><i class="fas fa-pencil-alt"></i> <span id="editHintText"></span></p>' +
+                '<div class="edit-row">' +
+                '  <textarea id="editInput" rows="2" class="edit-textarea" maxlength="300"></textarea>' +
+                '  <button type="button" id="editMicBtn" class="edit-mic-btn" title="' + tr('Speak to edit', 'बोलकर सुधारें') + '">' +
+                '    <i class="fas fa-microphone"></i>' +
+                '  </button>' +
+                '</div>' +
+                '<button type="button" id="editDoneBtn" class="btn btn-confirm" style="margin-top:10px;width:100%">' +
+                '  <i class="fas fa-check"></i> <span id="editDoneText"></span>' +
+                '</button>';
+            const sec = document.querySelector('.recognized-section');
+            if (sec) sec.insertAdjacentElement('afterend', panel);
+        }
+        // Fill texts in current language
+        document.getElementById('editHintText').textContent = UI.editPrompt();
+        document.getElementById('editInput').value = recognizedText ? recognizedText.textContent : '';
+        document.getElementById('editDoneText').textContent = tr('Done — Confirm Status', 'हो गया — स्थिति जाँचें');
+        panel.style.display = 'block';
+
+        // Wire edit-mic button
+        const editMicBtn = document.getElementById('editMicBtn');
+        if (editMicBtn) {
+            editMicBtn.onclick = function () {
+                if (!recognition) return;
+                if (isListening) { recognition.stop(); return; }
+                transcript = '';
+                recognition.lang = voiceLang();
+                // Override onend for edit mode: put result into editInput
+                const origOnend = recognition.onend;
+                recognition.onend = () => {
+                    clearTimeout(silenceTimer);
+                    isListening = false;
+                    editMicBtn.classList.remove('listening');
+                    if (micBtn) micBtn.setAttribute('data-listening', 'false');
+                    if (soundWaves) soundWaves.style.display = 'none';
+                    if (transcript) {
+                        const inp = document.getElementById('editInput');
+                        if (inp) inp.value = transcript;
+                        extractedData = extractInformation(transcript);
+                        updateExtractedInfo(extractedData);
+                    }
+                    recognition.onend = origOnend; // restore
+                };
+                editMicBtn.classList.add('listening');
+                try { recognition.start(); } catch (e) { /* already running */ }
+            };
+        }
+
+        // Wire done button
+        const editDoneBtn = document.getElementById('editDoneBtn');
+        if (editDoneBtn) {
+            editDoneBtn.onclick = () => {
+                const inp = document.getElementById('editInput');
+                const val = inp && inp.value.trim();
+                if (val) {
+                    if (recognizedText) recognizedText.textContent = val;
+                    extractedData = extractInformation(val);
+                    updateExtractedInfo(extractedData);
+                }
+                hideEditPanel();
+                if (confirmBtn) confirmBtn.click();
+            };
+        }
+
+        const inp = document.getElementById('editInput');
+        if (inp) inp.focus();
+    }
+
+    function hideEditPanel() {
+        const panel = document.getElementById('editPanel');
+        if (panel) panel.style.display = 'none';
+    }
+
+    if (editBtn) editBtn.addEventListener('click', () => {
+        const panel = document.getElementById('editPanel');
+        if (panel && panel.style.display !== 'none') { hideEditPanel(); }
+        else { showEditPanel(); }
+    });
+
+    /* ── Agent reply box ─────────────────────────────────── */
+    function showAgentReply(text) {
+        let box = document.getElementById('agentReplyBox');
+        if (box) { box.querySelector('p').textContent = text; return; }
+        box = document.createElement('div');
+        box.id = 'agentReplyBox';
+        box.className = 'agent-reply-box';
+        box.innerHTML = '<i class="fas fa-robot" style="color:var(--primary-green);flex-shrink:0"></i><p style="margin:0">' + text + '</p>';
+        Object.assign(box.style, { background: '#e8f5e9', border: '2px solid #2e7d32', borderRadius: '12px', padding: '12px 16px', margin: '12px 0', display: 'flex', alignItems: 'flex-start', gap: '10px' });
+        const sec = document.querySelector('.recognized-section');
+        if (sec) sec.insertAdjacentElement('afterbegin', box);
+    }
+
+    /* ── Retry button ────────────────────────────────────── */
+    if (retryBtn) retryBtn.addEventListener('click', () => {
+        if (recognizedSection) recognizedSection.style.display = 'none';
+        transcript = '';
+        extractedData = { applicationNumber: null, season: null, crop: null };
+        if (statusText) statusText.textContent = UI.tapToStart();
+        const rb = document.getElementById('agentReplyBox'); if (rb) rb.remove();
+        hideEditPanel();
+        if (recognition) setTimeout(() => { recognition.lang = voiceLang(); recognition.start(); }, 400);
+    });
+
+    /* ── Speak button ────────────────────────────────────── */
+    if (speakBtn) speakBtn.addEventListener('click', () => {
+        const text = recognizedText ? recognizedText.textContent : '';
+        if (!text) { showNotification(UI.noSpeak(), 'warning'); return; }
+        if (isSpeaking) { synth.cancel(); return; }
+        speakText(text, voiceLang());
+    });
+
+    /* ── Auto-speak preference ───────────────────────────── */
+    if (autoSpeak) {
+        const sv = localStorage.getItem('autoSpeak');
+        if (sv !== null) autoSpeak.checked = sv === 'true';
+        autoSpeak.addEventListener('change', function () { localStorage.setItem('autoSpeak', this.checked); });
+    }
+
+    /* ── Recent searches ─────────────────────────────────── */
+    function saveToRecentSearches(text, data) {
+        try {
+            let s = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+            s.unshift({ text, data, timestamp: new Date().toISOString() });
+            s = s.slice(0, 5);
+            localStorage.setItem('recentSearches', JSON.stringify(s));
+        } catch (e) { /* */ }
+    }
+
+    function displayRecentSearches() {
+        try {
+            const s = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+            if (!recentSearches || !recentList) return;
+            if (!s.length) { recentSearches.style.display = 'none'; return; }
+            recentSearches.style.display = 'block';
+            recentList.innerHTML = '';
+            s.forEach(sr => {
+                const it = document.createElement('div'); it.className = 'recent-item';
+                it.innerHTML = '<div><strong>' + (sr.data.applicationNumber || 'N/A') + '</strong><span> — ' + sr.text.substring(0, 50) + '…</span></div><small>' + formatTimestamp(sr.timestamp) + '</small>';
+                it.addEventListener('click', () => {
+                    if (recognizedText) recognizedText.textContent = sr.text;
+                    extractedData = sr.data;
+                    updateExtractedInfo(extractedData);
+                    if (recognizedSection) recognizedSection.style.display = 'block';
+                });
+                recentList.appendChild(it);
+            });
+        } catch (e) { /* */ }
+    }
+
+    function formatTimestamp(iso) {
+        const d = new Date(iso), diff = Math.floor((new Date() - d) / 60000);
+        return diff < 1 ? tr('Just now', 'अभी') : diff < 60 ? diff + tr(' min ago', ' मिनट पहले') : diff < 1440 ? Math.floor(diff / 60) + tr(' hours ago', ' घंटे पहले') : d.toLocaleDateString();
+    }
+
+    /* ── UI helpers ──────────────────────────────────────── */
+    function resetUI() {
+        if (micBtn) micBtn.setAttribute('data-listening', 'false');
+        if (soundWaves) soundWaves.style.display = 'none';
+        isListening = false;
+    }
+
+    function showNotification(message, type) {
+        type = type || 'info';
+        const n = document.createElement('div'); n.className = 'notification notification-' + type; n.textContent = message;
+        const colors = { success: '#4CAF50', error: '#D32F2F', warning: '#FFC107', info: '#2196F3' };
+        Object.assign(n.style, { position: 'fixed', top: '20px', right: '20px', padding: '1rem 1.5rem', borderRadius: '12px', color: '#fff', fontSize: '1rem', fontWeight: '500', boxShadow: '0 4px 12px rgba(0,0,0,0.2)', zIndex: '10000', maxWidth: '400px', animation: 'slideInRight 0.4s ease' });
+        n.style.backgroundColor = colors[type] || colors.info;
+        document.body.appendChild(n);
+        setTimeout(() => { n.style.animation = 'slideOutRight 0.4s ease'; setTimeout(() => n.remove(), 400); }, 3500);
+    }
+
+    /* ── DOMContentLoaded ────────────────────────────────── */
+    document.addEventListener('DOMContentLoaded', () => {
+        const sl = localStorage.getItem('preferredLanguage') || 'en';
+
+        // Sync voice language select to stored lang (en/hi only)
+        if (voiceLanguage) {
+            voiceLanguage.value = sl === 'hi' ? 'hi-IN' : 'en-IN';
+            if (recognition) recognition.lang = voiceLanguage.value;
+        }
+
+        // Apply all page translations
+        if (typeof applyLanguage === 'function') applyLanguage();
+
+        // Update status text in correct language
+        if (statusText) statusText.textContent = UI.tapToStart();
+
+        // Update example phrases
+        const isHI = sl === 'hi';
+        const ex = document.querySelectorAll('.example-item p');
+        if (ex[0]) ex[0].textContent = isHI ? '"KRB-2026-00417 का स्टेटस बताओ"' : '"KRB-2026-00417 ka status batao"';
+        if (ex[1]) ex[1].textContent = isHI ? '"KRB-2026-00521 में कौन सा कागज़ बाकी है"' : '"What documents are missing for KRB-2026-00521"';
+        if (ex[2]) ex[2].textContent = isHI ? '"KRB-2026-00748 क्या पैसा आया"' : '"Has my money come for KRB-2026-00748"';
+
+        // Update button labels
+        if (confirmBtn) confirmBtn.innerHTML = '<i class="fas fa-check"></i> ' + tr('Confirm & Check Status', 'पुष्टि करें');
+        if (retryBtn)   retryBtn.innerHTML   = '<i class="fas fa-redo"></i> '  + tr('Try Again', 'फिर बोलें');
+        if (editBtn)    editBtn.innerHTML    = '<i class="fas fa-edit"></i> '  + tr('Edit / Re-speak', 'सुधारें / दोबारा बोलें');
+
+        initAgentSession();
+        displayRecentSearches();
+
+        // Welcome prompt
+        setTimeout(() => {
+            const msg = isHI
+                ? 'माइक दबाएँ और अपना आवेदन नंबर बोलें।'
+                : 'Press the microphone and speak your application number.';
+            speakText(msg, voiceLanguage ? voiceLanguage.value : 'en-IN');
+        }, 900);
+    });
+})();
